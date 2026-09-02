@@ -51,7 +51,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         <div className="bg-gradient-to-r from-forest-950 via-forest-900 to-forest-800 text-cream-50 rounded-3xl p-8 sm:p-12 shadow-sm relative overflow-hidden">
           <div className="max-w-2xl space-y-3 relative z-10">
             <span className="text-[11px] uppercase tracking-widest font-bold text-sage-300">
-              Herbal Life Collection
+              Mustafa Life Collection
             </span>
             <h1 className="font-serif text-3xl sm:text-4xl font-bold text-white">
               {category.name}

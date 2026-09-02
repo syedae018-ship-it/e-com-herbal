@@ -39,7 +39,7 @@ export default async function HomePage() {
       {/* 7. Featured Split Section */}
       <FeaturedSplit />
 
-      {/* 8. Why Herbal Life */}
+      {/* 8. Why Mustafa Life */}
       <WhyHerbalLife />
 
       {/* 9. Customer Reviews */}

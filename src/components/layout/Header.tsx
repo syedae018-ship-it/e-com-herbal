@@ -91,8 +91,8 @@ export const Header: React.FC = () => {
                 <Leaf className="w-5 h-5 text-sage-300" />
               </div>
               <div className="flex flex-col">
-                <span className="font-serif text-xl sm:text-2xl font-bold tracking-tight text-forest-900 leading-none">
-                  HERBAL LIFE
+                <span className="font-serif text-xl sm:text-2xl font-bold tracking-tight text-forest-950 leading-none">
+                  MUSTAFA LIFE
                 </span>
                 <span className="text-[10px] tracking-widest uppercase font-semibold text-sage-500 mt-1">
                   Naturally Better. Everyday.

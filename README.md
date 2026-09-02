@@ -1,4 +1,4 @@
-# 🌿 HERBAL LIFE - Phase 2 Supabase Backend Integration Guide
+# 🌿 MUSTAFA LIFE - Phase 2 Supabase Backend Integration Guide
 
 > **Naturally Better. Everyday.**  
 > A complete, modern, high-converting organic & herbal wellness e-commerce platform built with Next.js 14 (App Router), React 18, TypeScript, Tailwind CSS, and Supabase (PostgreSQL, Authentication, Row Level Security, and Storage).
@@ -7,7 +7,7 @@
 
 ## 📖 Table of Contents
 
-1. [What Supabase Is & How HERBAL LIFE Uses It](#1-what-supabase-is--how-herbal-life-uses-it)
+1. [What Supabase Is & How MUSTAFA LIFE Uses It](#1-what-supabase-is--how-mustafa-life-uses-it)
 2. [Step-by-Step Supabase Project Setup](#2-step-by-step-supabase-project-setup)
 3. [Environment Variables Setup (`.env.local`)](#3-environment-variables-setup-envlocal)
 4. [Running the Database Schema (`schema.sql`)](#4-running-the-database-schema-schemasql)
@@ -20,7 +20,7 @@
 
 ---
 
-## 1. What Supabase Is & How HERBAL LIFE Uses It
+## 1. What Supabase Is & How MUSTAFA LIFE Uses It
 
 [Supabase](https://supabase.com) is an open-source Firebase alternative powered by PostgreSQL. In this project, Supabase handles:
 
@@ -105,18 +105,18 @@
 
 ## 7. Creating & Promoting Your First Admin User
 
-Herbal Life uses strict database-level **Role-Based Access Control (RBAC)**.
+Mustafa Life uses strict database-level **Role-Based Access Control (RBAC)**.
 
 ### Step 1: Create your account
 1. Start your local server (`npm run dev`) and visit `http://localhost:3000/signup`.
-2. Register an account with your desired admin email (e.g. `admin@herballife.com`) and password.
+2. Register an account with your desired admin email (e.g. `admin@mustafalife.com`) and password.
 
 ### Step 2: Promote user to Admin in Supabase
 1. In Supabase Dashboard -> **SQL Editor**, run this query:
    ```sql
    UPDATE public.profiles
    SET role = 'admin'
-   WHERE email = 'admin@herballife.com';
+   WHERE email = 'admin@mustafalife.com';
    ```
 2. Now visit `http://localhost:3000/admin/login` and log in. You will be granted full access to the Admin Dashboard!
 

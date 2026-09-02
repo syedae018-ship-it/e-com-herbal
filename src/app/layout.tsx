@@ -21,11 +21,11 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: 'HERBAL LIFE | Naturally Better. Everyday.',
+  title: 'MUSTAFA LIFE | Naturally Better. Everyday.',
   description:
     'Discover thoughtfully crafted organic and herbal products made for healthier everyday living. 100% natural ingredients, clean formulations, and time-tested Ayurvedic remedies.',
   keywords: [
-    'Herbal Life',
+    'Mustafa Life',
     'Organic Wellness',
     'Ayurvedic Herbs',
     'Natural Skincare',

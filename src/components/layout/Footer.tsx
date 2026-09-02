@@ -42,7 +42,7 @@ export const Footer: React.FC = () => {
               <div className="w-8 h-8 rounded-full bg-sage-400 flex items-center justify-center text-forest-950 font-bold">
                 <Leaf className="w-4 h-4" />
               </div>
-              <span className="font-serif text-xl font-bold tracking-tight text-white">HERBAL LIFE</span>
+              <span className="font-serif text-xl font-bold tracking-tight text-white">MUSTAFA LIFE</span>
             </Link>
             <p className="text-xs text-sage-200/80 leading-relaxed max-w-sm">
               Naturally Better. Everyday. We formulate clean, honest, and high-potency herbal remedies and nutrition designed to elevate daily health, skin vitality, and hair wellness.
@@ -125,7 +125,7 @@ export const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
-                <span className="text-[11px] text-sage-400">care@herballife.com</span>
+                <span className="text-[11px] text-sage-400">care@mustafalife.com</span>
               </li>
             </ul>
           </div>
@@ -191,7 +191,7 @@ export const Footer: React.FC = () => {
 
         {/* Bottom Bar */}
         <div className="border-t border-forest-900/80 mt-12 pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-sage-400 gap-4">
-          <p>© {new Date().getFullYear()} HERBAL LIFE India. All rights reserved. Naturally Better. Everyday.</p>
+          <p>© {new Date().getFullYear()} MUSTAFA LIFE India. All rights reserved. Naturally Better. Everyday.</p>
           <div className="flex items-center space-x-6 text-[11px]">
             <Link href="/shop" className="hover:text-white transition-colors">
               Privacy Policy

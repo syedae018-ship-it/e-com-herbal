@@ -11,7 +11,7 @@ export async function subscribeNewsletter(email: string): Promise<{ success: boo
   const cleanEmail = email.toLowerCase().trim();
 
   if (!isSupabaseConfigured() || !supabase) {
-    return { success: true, message: 'Thank you for subscribing to Herbal Life wellness updates!' };
+    return { success: true, message: 'Thank you for subscribing to Mustafa Life wellness updates!' };
   }
 
   try {
@@ -27,7 +27,7 @@ export async function subscribeNewsletter(email: string): Promise<{ success: boo
       return { success: false, message: error.message };
     }
 
-    return { success: true, message: 'Thank you for subscribing to Herbal Life wellness updates!' };
+    return { success: true, message: 'Thank you for subscribing to Mustafa Life wellness updates!' };
   } catch (err: any) {
     return { success: false, message: err.message || 'Something went wrong. Please try again.' };
   }

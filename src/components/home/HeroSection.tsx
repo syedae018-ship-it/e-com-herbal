@@ -67,7 +67,7 @@ export const HeroSection: React.FC = () => {
             <div className="relative w-full max-w-md aspect-[4/5] rounded-3xl overflow-hidden shadow-elevated border-8 border-white bg-sand-100">
               <Image
                 src="https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=1000&q=85"
-                alt="Herbal Life Organic Moringa and Botanical Herbs"
+                alt="Mustafa Life Organic Moringa and Botanical Herbs"
                 fill
                 priority
                 className="object-cover"

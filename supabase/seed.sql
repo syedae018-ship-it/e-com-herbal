@@ -1,5 +1,5 @@
 -- ==============================================================================
--- HERBAL LIFE - SUPABASE SEED DATA (PHASE 2)
+-- MUSTAFA LIFE - SUPABASE SEED DATA (PHASE 2)
 -- 5 Categories & 10+ Authentic Organic Herbal Wellness Products
 -- ==============================================================================
 

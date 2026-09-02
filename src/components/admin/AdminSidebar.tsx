@@ -42,7 +42,7 @@ export const AdminSidebar: React.FC = () => {
           </div>
           <div>
             <span className="font-serif text-lg font-bold text-white tracking-tight">
-              HERBAL LIFE
+              MUSTAFA LIFE
             </span>
             <div className="flex items-center gap-1 text-[10px] text-sage-300 font-bold uppercase tracking-wider">
               <ShieldCheck className="w-3 h-3 text-emerald-400" />
@@ -56,7 +56,7 @@ export const AdminSidebar: React.FC = () => {
           <p className="text-xs font-bold text-white truncate">
             {profile?.full_name || 'Admin User'}
           </p>
-          <p className="text-[11px] text-sage-400 truncate">{profile?.email || 'admin@herballife.com'}</p>
+          <p className="text-[11px] text-sage-400 truncate">{profile?.email || 'admin@mustafalife.com'}</p>
         </div>
 
         {/* Nav Links */}

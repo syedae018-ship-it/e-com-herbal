@@ -121,7 +121,7 @@ export default function AdminLoginPage() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="admin@herballife.com"
+                placeholder="admin@mustafalife.com"
                 className="w-full bg-sand-50/70 border border-sand-300 rounded-xl px-4 py-2.5 pl-10 text-xs sm:text-sm text-charcoal-900 focus:outline-none focus:ring-2 focus:ring-forest-700"
               />
               <Mail className="w-4 h-4 text-charcoal-400 absolute left-3.5 top-3" />

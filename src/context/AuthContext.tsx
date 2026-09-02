@@ -129,7 +129,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const isMockAdmin = email.toLowerCase().includes('admin');
     const mockProfile: Profile = {
       id: `usr-${Date.now()}`,
-      full_name: isMockAdmin ? 'Herbal Life Admin' : email.split('@')[0],
+      full_name: isMockAdmin ? 'Mustafa Life Admin' : email.split('@')[0],
       email: email,
       role: isMockAdmin ? 'admin' : 'customer',
       created_at: new Date().toISOString(),
@@ -199,7 +199,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const adminProf: Profile = {
       id: 'admin-demo-1',
       full_name: 'Store Administrator',
-      email: 'admin@herballife.com',
+      email: 'admin@mustafalife.com',
       role: 'admin',
       created_at: new Date().toISOString(),
     };

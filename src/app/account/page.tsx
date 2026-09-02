@@ -128,7 +128,7 @@ export default function AccountDashboardPage() {
               </p>
             </div>
             <div className="pt-3 border-t border-sand-100 text-[11px] text-sage-700 font-semibold flex items-center gap-1">
-              <ShieldCheck className="w-3.5 h-3.5" /> Verified Herbal Life Member
+              <ShieldCheck className="w-3.5 h-3.5" /> Verified Mustafa Life Member
             </div>
           </div>
         </div>

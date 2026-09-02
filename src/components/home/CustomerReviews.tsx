@@ -41,7 +41,7 @@ export const CustomerReviews: React.FC = () => {
             Loved by Thousands Across India
           </h2>
           <p className="text-xs sm:text-sm text-charcoal-600">
-            Read how Herbal Life has become an indispensable part of daily wellness routines.
+            Read how Mustafa Life has become an indispensable part of daily wellness routines.
           </p>
         </div>
 
