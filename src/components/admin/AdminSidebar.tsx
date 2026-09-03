@@ -25,15 +25,32 @@ export const AdminSidebar: React.FC = () => {
     router.push('/admin/login');
   };
 
-  const navItems = [
-    { label: 'Dashboard', href: '/admin', icon: LayoutDashboard },
-    { label: 'Products', href: '/admin/products', icon: Package },
-    { label: 'Add Product', href: '/admin/products/new', icon: PlusCircle },
-    { label: 'Orders', href: '/admin/orders', icon: ShoppingBag },
+  const navSections = [
+    {
+      group: 'CMS & Customization',
+      items: [
+        { label: 'Dashboard', href: '/admin', icon: LayoutDashboard },
+        { label: 'Homepage Content', href: '/admin/homepage', icon: Leaf },
+        { label: 'Taglines & Text', href: '/admin/taglines', icon: PlusCircle },
+        { label: 'Image Management', href: '/admin/images', icon: Package },
+        { label: 'Testimonials', href: '/admin/testimonials', icon: ShieldCheck },
+        { label: 'Website Settings', href: '/admin/settings', icon: LayoutDashboard },
+        { label: 'Footer Settings', href: '/admin/footer', icon: LayoutDashboard },
+      ],
+    },
+    {
+      group: 'Store Management',
+      items: [
+        { label: 'Products', href: '/admin/products', icon: Package },
+        { label: 'Categories', href: '/admin/categories', icon: Package },
+        { label: 'Orders', href: '/admin/orders', icon: ShoppingBag },
+        { label: 'Customers', href: '/admin/customers', icon: ShieldCheck },
+      ],
+    },
   ];
 
   return (
-    <aside className="w-64 bg-forest-950 text-cream-100 min-h-screen p-5 flex flex-col justify-between border-r border-forest-900 shrink-0">
+    <aside className="w-64 bg-forest-950 text-cream-100 min-h-screen p-5 flex flex-col justify-between border-r border-forest-900 shrink-0 sticky top-0 h-screen overflow-y-auto">
       <div className="space-y-6">
         {/* Brand */}
         <div className="flex items-center gap-2.5 pb-5 border-b border-forest-900">
@@ -59,27 +76,37 @@ export const AdminSidebar: React.FC = () => {
           <p className="text-[11px] text-sage-400 truncate">{profile?.email || 'admin@mustafalife.com'}</p>
         </div>
 
-        {/* Nav Links */}
-        <nav className="space-y-1.5">
-          {navItems.map((item) => {
-            const Icon = item.icon;
-            const isActive = pathname === item.href;
+        {/* Nav Sections */}
+        <nav className="space-y-4">
+          {navSections.map((group, gIdx) => (
+            <div key={gIdx} className="space-y-1">
+              <p className="text-[10px] font-bold uppercase tracking-widest text-forest-400 px-3 py-1">
+                {group.group}
+              </p>
+              {group.items.map((item) => {
+                const Icon = item.icon;
+                const isActive =
+                  item.href === '/admin'
+                    ? pathname === '/admin'
+                    : pathname.startsWith(item.href);
 
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all ${
-                  isActive
-                    ? 'bg-sage-400 text-forest-950 shadow-sm'
-                    : 'text-sage-200/80 hover:bg-forest-900 hover:text-white'
-                }`}
-              >
-                <Icon className="w-4 h-4 shrink-0" />
-                <span>{item.label}</span>
-              </Link>
-            );
-          })}
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold transition-all ${
+                      isActive
+                        ? 'bg-sage-400 text-forest-950 shadow-sm'
+                        : 'text-sage-200/80 hover:bg-forest-900 hover:text-white'
+                    }`}
+                  >
+                    <Icon className="w-4 h-4 shrink-0" />
+                    <span>{item.label}</span>
+                  </Link>
+                );
+              })}
+            </div>
+          ))}
         </nav>
       </div>
 
