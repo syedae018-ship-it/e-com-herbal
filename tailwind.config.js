@@ -62,8 +62,11 @@ module.exports = {
         },
       },
       fontFamily: {
-        serif: ['var(--font-playfair)', 'Georgia', 'serif'],
-        sans: ['var(--font-inter)', 'system-ui', '-apple-system', 'sans-serif'],
+        serif: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Display"', 'var(--font-inter)', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-inter)', '-apple-system', 'BlinkMacSystemFont', '"SF Pro Display"', 'system-ui', 'sans-serif'],
+        heading: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Display"', 'var(--font-inter)', 'system-ui', 'sans-serif'],
+        'admin-body': ['var(--font-poppins)', 'Poppins', 'system-ui', '-apple-system', 'sans-serif'],
+        'admin-heading': ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Display"', '"Helvetica Neue"', 'Helvetica', 'Arial', 'sans-serif'],
       },
       boxShadow: {
         'soft': '0 4px 20px -2px rgba(23, 54, 37, 0.06)',

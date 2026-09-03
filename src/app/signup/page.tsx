@@ -53,7 +53,7 @@ export default function SignupPage() {
             Create Your Account
           </h1>
           <p className="text-xs text-charcoal-600">
-            Join the Mustafa Life community for clean, authentic wellness.
+            Join the Herbal E Com Life community for clean, authentic wellness.
           </p>
         </div>
 

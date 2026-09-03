@@ -7,25 +7,25 @@ export const CustomerReviews: React.FC = () => {
       name: 'Priya Sharma',
       location: 'Bengaluru',
       rating: 5,
-      product: 'Organic Moringa Superfood Powder',
+      product: 'Neem & Tulsi Herbal Soap',
       comment:
-        'The quality is unmatched! I mix a teaspoon into my morning smoothie every day and notice a clear, sustained boost in my energy without the midday crash.',
+        'The Neem & Tulsi herbal soap is exceptional! It produces such a creamy, soothing lather without drying out my skin, leaving it fresh and naturally balanced.',
     },
     {
       name: 'Rohan Mehta',
       location: 'Mumbai',
       rating: 5,
-      product: 'Herbal Immunity Tablets',
+      product: 'Amla & Bhringraj Hair Oil',
       comment:
-        'Essential for changing weather. Since taking these Giloy & Amla tablets, my seasonal allergies are virtually gone. Truly authentic formulation with real herbs.',
+        'Essential for my weekly routine. The Amla and Bhringraj oil is light, non-sticky, and leaves my scalp feeling calm, nourished, and free from dryness.',
     },
     {
       name: 'Ananya Iyer',
       location: 'Chennai',
       rating: 5,
-      product: 'Pure Aloe Vera Gentle Cleanser',
+      product: 'Aloe Vera Gentle Face Wash',
       comment:
-        'So soothing on my sensitive skin! Doesn\'t leave my face dry or tight like other cleansers. Truly authentic aloe texture with zero artificial fragrance.',
+        'So soothing on my sensitive skin! Does not leave my face dry or tight like harsh cleansers. Pure botanical freshness with zero artificial perfume.',
     },
   ];
 
@@ -41,7 +41,7 @@ export const CustomerReviews: React.FC = () => {
             Loved by Thousands Across India
           </h2>
           <p className="text-xs sm:text-sm text-charcoal-600">
-            Read how Mustafa Life has become an indispensable part of daily wellness routines.
+            Read how Herbal E Com Life has become an indispensable part of daily wellness routines.
           </p>
         </div>
 

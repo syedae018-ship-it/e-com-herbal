@@ -21,6 +21,11 @@ import { AnnouncementBar } from './AnnouncementBar';
 
 export const Header: React.FC = () => {
   const pathname = usePathname();
+
+  if (pathname?.startsWith('/admin')) {
+    return null;
+  }
+
   const router = useRouter();
   const { itemCount, setIsCartOpen } = useCart();
   const { user, profile, isAdmin, signOut } = useAuth();
@@ -57,10 +62,10 @@ export const Header: React.FC = () => {
   const navLinks = [
     { label: 'Home', href: '/' },
     { label: 'Shop All', href: '/shop' },
-    { label: 'Herbal Wellness', href: '/category/herbal-wellness' },
-    { label: 'Natural Skincare', href: '/category/natural-skincare' },
+    { label: 'Herbal Skincare', href: '/category/herbal-skincare' },
     { label: 'Hair Care', href: '/category/hair-care' },
-    { label: 'Healthy Nutrition', href: '/category/healthy-nutrition' },
+    { label: 'Bath & Body', href: '/category/bath-and-body' },
+    { label: 'Organic Essentials', href: '/category/organic-essentials' },
   ];
 
   return (
@@ -92,7 +97,7 @@ export const Header: React.FC = () => {
               </div>
               <div className="flex flex-col">
                 <span className="font-serif text-xl sm:text-2xl font-bold tracking-tight text-forest-950 leading-none">
-                  MUSTAFA LIFE
+                  HERBAL E COM LIFE
                 </span>
                 <span className="text-[10px] tracking-widest uppercase font-semibold text-sage-500 mt-1">
                   Naturally Better. Everyday.
@@ -274,7 +279,7 @@ export const Header: React.FC = () => {
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search organic moringa, turmeric, face wash, hair oils..."
+                  placeholder="Search herbal soaps, hair oils, face wash, night creams..."
                   autoFocus
                   className="w-full bg-white border border-sand-300 rounded-xl px-4 py-2.5 pl-11 text-sm text-charcoal-900 placeholder:text-charcoal-400 focus:outline-none focus:ring-2 focus:ring-forest-700"
                 />

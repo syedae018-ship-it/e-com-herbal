@@ -5,45 +5,45 @@ import { Shield, Sparkles, Flame, Zap, Apple, Activity, ArrowRight } from 'lucid
 export const ShopByNeed: React.FC = () => {
   const needs = [
     {
-      icon: Shield,
-      title: 'Better Immunity',
-      desc: 'Giloy, Tulsi, and Vitamin C extracts to defend against seasonal pollutants.',
-      slug: 'herbal-wellness',
+      icon: Sparkles,
+      title: 'Clear & Radiant Skin',
+      desc: 'Gentle neem, holy basil, and aloe vera cleansers to clarify and balance complexion.',
+      slug: 'herbal-skincare',
       bgClass: 'bg-emerald-50 text-emerald-800 border-emerald-100',
     },
     {
-      icon: Sparkles,
-      title: 'Healthy Skin',
-      desc: 'Aloe Vera, Rose, and Turmeric tonics to replenish deep natural radiance.',
-      slug: 'natural-skincare',
-      bgClass: 'bg-rose-50 text-rose-800 border-rose-100',
-    },
-    {
       icon: Flame,
-      title: 'Stronger Hair',
-      desc: 'Bhringraj, Amla, and Rosemary decoctions for denser roots and shine.',
+      title: 'Strong & Lustrous Hair',
+      desc: 'Traditional amla, bhringraj, and shikakai oils to deeply nourish roots and strands.',
       slug: 'hair-care',
       bgClass: 'bg-amber-50 text-amber-800 border-amber-100',
     },
     {
+      icon: Shield,
+      title: 'Artisanal Bath Care',
+      desc: 'Cold-processed sandalwood bath bars and gentle soaps for whole-family daily bathing.',
+      slug: 'bath-and-body',
+      bgClass: 'bg-rose-50 text-rose-800 border-rose-100',
+    },
+    {
       icon: Zap,
-      title: 'Daily Energy',
-      desc: 'Organic Moringa and Ashwagandha to combat fatigue and revitalize stamina.',
-      slug: 'healthy-nutrition',
+      title: 'Pure Virgin Oils',
+      desc: 'Cold-pressed extra virgin coconut and botanical carrier oils for skin and hair health.',
+      slug: 'organic-essentials',
       bgClass: 'bg-teal-50 text-teal-800 border-teal-100',
     },
     {
       icon: Apple,
-      title: 'Digestive Wellness',
-      desc: 'Raw forest honey and gut-nourishing superfoods for comfortable digestion.',
-      slug: 'healthy-nutrition',
+      title: 'Traditional Ubtan Polishing',
+      desc: 'Soap-free Ayurvedic chickpea, wild turmeric, and vetiver herbal body powders.',
+      slug: 'natural-wellness',
       bgClass: 'bg-lime-50 text-lime-800 border-lime-100',
     },
     {
       icon: Activity,
-      title: 'Stress & Sleep',
-      desc: 'KSM-66 full-spectrum adaptogens to soothe mind and support restful nights.',
-      slug: 'herbal-wellness',
+      title: 'All-Day Skin Hydration',
+      desc: 'Pure botanical aloe vera gels and lightweight rose lotions for long-lasting comfort.',
+      slug: 'organic-essentials',
       bgClass: 'bg-indigo-50 text-indigo-800 border-indigo-100',
     },
   ];
@@ -54,13 +54,13 @@ export const ShopByNeed: React.FC = () => {
         {/* Section Heading */}
         <div className="text-center max-w-2xl mx-auto space-y-2">
           <span className="text-xs uppercase font-bold tracking-widest text-sage-600">
-            Targeted Solutions
+            Targeted Botanical Care
           </span>
           <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-forest-950">
-            Shop by Your Need
+            Shop by Your Routine
           </h2>
           <p className="text-xs sm:text-sm text-charcoal-600">
-            Target specific wellness goals with scientifically formulated Ayurvedic remedies.
+            Thoughtfully formulated for wholesome everyday personal care and clean beauty rituals.
           </p>
         </div>
 

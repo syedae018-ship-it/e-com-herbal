@@ -1,5 +1,5 @@
 -- ==============================================================================
--- MUSTAFA LIFE - COMPLETE SUPABASE POSTGRESQL DATABASE SCHEMA (PHASE 2)
+-- HERBAL E COM LIFE - COMPLETE SUPABASE POSTGRESQL DATABASE SCHEMA (PHASE 2)
 -- ==============================================================================
 
 -- 1. ENABLE EXTENSIONS

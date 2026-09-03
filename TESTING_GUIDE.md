@@ -1,6 +1,6 @@
-# 🧪 MUSTAFA LIFE - Phase 2.5 End-to-End Testing Guide
+# 🧪 HERBAL E COM LIFE - Phase 2.5 End-to-End Testing Guide
 
-This guide provides step-by-step instructions to verify every flow of the **MUSTAFA LIFE** e-commerce application.
+This guide provides step-by-step instructions to verify every flow of the **HERBAL E COM LIFE** e-commerce application.
 
 ---
 
@@ -46,7 +46,7 @@ This guide provides step-by-step instructions to verify every flow of the **MUST
 2. Register a new test customer account:
    - **Full Name**: `Priya Sharma`
    - **Email**: `priya.sharma@example.com`
-   - **Password**: `mustafalife123`
+   - **Password**: `herbalecom123`
 3. Click **Create Account**.
 4. Verify you are automatically logged in and redirected to `/account`.
 5. Verify the dashboard greets you with your real name and email.

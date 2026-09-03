@@ -16,7 +16,8 @@
   }
 
   h1, h2, h3, h4, .font-serif {
-    font-family: var(--font-playfair), Georgia, 'Times New Roman', serif;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", var(--font-inter), "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    letter-spacing: -0.02em;
   }
 }
 

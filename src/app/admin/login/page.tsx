@@ -4,58 +4,52 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
-import { supabase, isSupabaseConfigured } from '@/lib/supabase/client';
-import { ShieldCheck, Lock, Mail, ArrowRight, AlertCircle, Sparkles } from 'lucide-react';
+import { isSupabaseConfigured } from '@/lib/supabase/client';
+import {
+  ShieldCheck,
+  Mail,
+  Lock,
+  Leaf,
+  AlertCircle,
+  Loader2,
+  ArrowRight,
+  ChevronDown,
+  ChevronUp,
+} from 'lucide-react';
 
 export default function AdminLoginPage() {
   const router = useRouter();
-  const { signIn, loginAsDemoAdmin } = useAuth();
+  const { signIn, loginAsDemoAdmin, user, profile } = useAuth();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [showCredentialForm, setShowCredentialForm] = useState(isSupabaseConfigured());
+
+  // If already an authenticated admin, redirect straight to dashboard
+  if (user && profile?.role === 'admin') {
+    router.replace('/admin');
+    return null;
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email) {
-      setError('Please enter your administrator email.');
+    setError(null);
+    setLoading(true);
+
+    if (!email || !password) {
+      setError('Please enter both email and password.');
+      setLoading(false);
       return;
     }
 
-    setLoading(true);
-    setError('');
-
-    if (isSupabaseConfigured() && supabase) {
-      if (!password) {
-        setError('Password is required.');
+    // Live Supabase Authentication
+    if (isSupabaseConfigured()) {
+      const res = await signIn(email, password);
+      if (!res.success) {
+        setError(res.error || 'Invalid administrator credentials.');
         setLoading(false);
-        return;
-      }
-
-      const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
-        email: email.trim(),
-        password,
-      });
-
-      if (authError || !authData.user) {
-        setLoading(false);
-        setError(authError?.message || 'Invalid administrator credentials.');
-        return;
-      }
-
-      // Check role in profiles table
-      const { data: profileData, error: profileError } = await supabase
-        .from('profiles')
-        .select('role')
-        .eq('id', authData.user.id)
-        .single();
-
-      if (profileError || !profileData || profileData.role !== 'admin') {
-        // Sign out unauthorized user
-        await supabase.auth.signOut();
-        setLoading(false);
-        setError('You do not have administrator access.');
         return;
       }
 
@@ -72,7 +66,7 @@ export default function AdminLoginPage() {
       if (email.toLowerCase().includes('admin')) {
         router.push('/admin');
       } else {
-        setError('You do not have administrator access.');
+        setError('You do not have administrator access permissions.');
       }
     } else {
       setError(res.error || 'Invalid administrator credentials.');
@@ -85,96 +79,117 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="min-h-screen py-16 bg-forest-950 flex items-center justify-center p-4">
-      <div className="max-w-md w-full bg-white rounded-3xl border border-forest-900 p-8 sm:p-10 space-y-6 shadow-2xl">
-        {/* Admin Header */}
+    <div className="min-h-screen py-12 px-4 bg-[#f8faf9] flex items-center justify-center font-admin-body text-zinc-900 antialiased">
+      <div className="max-w-sm w-full bg-white rounded-2xl border border-zinc-200/90 p-6 sm:p-8 space-y-6 shadow-[0_4px_24px_rgba(0,0,0,0.06)]">
+        {/* Brand & Portal Header */}
         <div className="text-center space-y-2">
-          <div className="w-14 h-14 rounded-2xl bg-forest-900 text-cream-50 flex items-center justify-center mx-auto shadow-md">
-            <ShieldCheck className="w-7 h-7 text-sage-300" />
+          <div className="w-11 h-11 rounded-xl bg-forest-900 text-white flex items-center justify-center mx-auto shadow-sm">
+            <Leaf className="w-5 h-5 text-emerald-300" />
           </div>
-          <span className="text-[11px] uppercase font-bold tracking-widest text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
-            Secure Portal
-          </span>
-          <h1 className="font-serif text-2xl sm:text-3xl font-bold text-forest-950">
-            Admin Authentication
-          </h1>
-          <p className="text-xs text-charcoal-600">
-            Sign in with an authorized administrator account to manage products, catalog, and customer orders.
-          </p>
+          <div>
+            <span className="inline-block text-[10px] uppercase font-semibold tracking-wider text-forest-800 bg-forest-50 px-2.5 py-0.5 rounded-full border border-forest-100">
+              Admin Portal
+            </span>
+            <h1 className="font-admin-heading text-xl font-semibold tracking-tight text-zinc-950 mt-1.5">
+              HERBAL E COM LIFE
+            </h1>
+            <p className="text-xs text-zinc-500 mt-1 leading-relaxed">
+              Manage your products, catalog, and store orders.
+            </p>
+          </div>
         </div>
 
         {error && (
-          <div className="p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-700 flex items-center gap-2">
-            <AlertCircle className="w-4 h-4 shrink-0" />
+          <div className="p-3 rounded-lg bg-rose-50 border border-rose-200/80 text-xs text-rose-800 flex items-center gap-2">
+            <AlertCircle className="w-4 h-4 shrink-0 text-rose-600" />
             <span>{error}</span>
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-1.5">
-            <label className="text-xs font-bold uppercase tracking-wider text-charcoal-700">
-              Admin Email Address
-            </label>
-            <div className="relative">
-              <input
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="admin@mustafalife.com"
-                className="w-full bg-sand-50/70 border border-sand-300 rounded-xl px-4 py-2.5 pl-10 text-xs sm:text-sm text-charcoal-900 focus:outline-none focus:ring-2 focus:ring-forest-700"
-              />
-              <Mail className="w-4 h-4 text-charcoal-400 absolute left-3.5 top-3" />
-            </div>
-          </div>
-
-          <div className="space-y-1.5">
-            <label className="text-xs font-bold uppercase tracking-wider text-charcoal-700">
-              Password
-            </label>
-            <div className="relative">
-              <input
-                type="password"
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                className="w-full bg-sand-50/70 border border-sand-300 rounded-xl px-4 py-2.5 pl-10 text-xs sm:text-sm text-charcoal-900 focus:outline-none focus:ring-2 focus:ring-forest-700"
-              />
-              <Lock className="w-4 h-4 text-charcoal-400 absolute left-3.5 top-3" />
-            </div>
-          </div>
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-forest-900 hover:bg-forest-800 text-cream-50 font-bold py-3 px-6 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 text-xs sm:text-sm shadow-md disabled:opacity-50"
-          >
-            <span>{loading ? 'Verifying Permissions...' : 'Sign In as Administrator'}</span>
-            <ArrowRight className="w-4 h-4" />
-          </button>
-        </form>
-
-        {/* Instant Demo Admin Button */}
-        <div className="pt-2">
+        {/* 1-Click Primary Demo Admin Action */}
+        <div className="space-y-2">
           <button
             type="button"
             onClick={handleDemoAdminLogin}
-            className="w-full py-2.5 px-4 rounded-xl border-2 border-dashed border-emerald-400 hover:border-emerald-600 bg-emerald-50 text-emerald-950 text-xs font-bold transition-colors flex items-center justify-center gap-1.5"
+            className="w-full inline-flex items-center justify-center gap-2 bg-forest-900 hover:bg-forest-800 text-white font-medium px-4 py-3 rounded-xl text-xs sm:text-sm transition-all shadow-sm active:scale-[0.99] group cursor-pointer"
           >
-            <Sparkles className="w-4 h-4 text-emerald-700" />
-            <span>One-Click Demo Admin Login</span>
+            <ShieldCheck className="w-4 h-4 text-emerald-300" />
+            <span>Continue as Demo Admin</span>
+            <ArrowRight className="w-3.5 h-3.5 text-emerald-300 transform group-hover:translate-x-0.5 transition-transform" />
           </button>
         </div>
 
-        {/* Footer */}
-        <div className="pt-4 border-t border-sand-200 text-center space-y-2 text-xs text-charcoal-500">
-          <p>
-            Looking for regular customer login?{' '}
-            <Link href="/login" className="font-bold text-forest-900 hover:underline">
-              Customer Login →
-            </Link>
-          </p>
+        {/* Optional Credential Form Toggle */}
+        <div className="pt-2 border-t border-zinc-100">
+          <button
+            type="button"
+            onClick={() => setShowCredentialForm(!showCredentialForm)}
+            className="w-full flex items-center justify-center gap-1.5 text-xs text-zinc-400 hover:text-zinc-700 py-1 transition-colors"
+          >
+            <span>{showCredentialForm ? 'Hide credential login' : 'Sign in with credentials'}</span>
+            {showCredentialForm ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+          </button>
+
+          {showCredentialForm && (
+            <form onSubmit={handleSubmit} className="space-y-3.5 pt-3 animate-fadeIn">
+              <div className="space-y-1">
+                <label className="text-xs font-medium text-zinc-700">
+                  Admin Email
+                </label>
+                <div className="relative">
+                  <input
+                    type="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="name@example.com"
+                    className="w-full bg-zinc-50/70 border border-zinc-200 rounded-lg px-3 py-2 pl-8 text-xs sm:text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-1 focus:ring-forest-800 focus:border-forest-800 transition-colors"
+                  />
+                  <Mail className="w-3.5 h-3.5 text-zinc-400 absolute left-2.5 top-3" />
+                </div>
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-xs font-medium text-zinc-700">
+                  Password
+                </label>
+                <div className="relative">
+                  <input
+                    type="password"
+                    required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="••••••••"
+                    className="w-full bg-zinc-50/70 border border-zinc-200 rounded-lg px-3 py-2 pl-8 text-xs sm:text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-1 focus:ring-forest-800 focus:border-forest-800 transition-colors"
+                  />
+                  <Lock className="w-3.5 h-3.5 text-zinc-400 absolute left-2.5 top-3" />
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full inline-flex items-center justify-center gap-1.5 bg-zinc-900 text-white hover:bg-zinc-800 font-medium px-4 py-2 rounded-lg text-xs transition-colors disabled:opacity-50 mt-1 cursor-pointer"
+              >
+                {loading ? (
+                  <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                ) : (
+                  <ShieldCheck className="w-3.5 h-3.5" />
+                )}
+                <span>{loading ? 'Authenticating...' : 'Sign In Normally'}</span>
+              </button>
+            </form>
+          )}
+        </div>
+
+        {/* Back to Live Store */}
+        <div className="text-center pt-2 border-t border-zinc-100">
+          <Link
+            href="/"
+            className="text-xs text-zinc-400 hover:text-zinc-800 transition-colors"
+          >
+            ← Return to Live Store
+          </Link>
         </div>
       </div>
     </div>

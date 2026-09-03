@@ -5,7 +5,17 @@ import { useRouter } from 'next/navigation';
 import { Product, Category } from '@/lib/types';
 import { slugify } from '@/lib/utils';
 import { supabase, isSupabaseConfigured } from '@/lib/supabase/client';
-import { Upload, X, Plus, Image as ImageIcon, CheckCircle2, AlertCircle, ArrowUp, ArrowDown } from 'lucide-react';
+import {
+  Upload,
+  X,
+  Plus,
+  Image as ImageIcon,
+  CheckCircle2,
+  AlertCircle,
+  ArrowUp,
+  ArrowDown,
+  Loader2,
+} from 'lucide-react';
 import Image from 'next/image';
 
 interface ProductFormProps {
@@ -78,27 +88,23 @@ export const ProductForm: React.FC<ProductFormProps> = ({
     setImages(newImages);
   };
 
-  // Upload to Supabase Storage with size and MIME validation
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
     setErrorMessage('');
 
-    // 1. Validate file type
     if (!ALLOWED_MIME_TYPES.includes(file.type.toLowerCase())) {
       setErrorMessage('Please select a valid image file (JPG, PNG, WebP, or AVIF).');
       return;
     }
 
-    // 2. Validate file size (max 5MB)
     if (file.size > MAX_FILE_SIZE_BYTES) {
-      setErrorMessage(`File size is too large (${(file.size / (1024 * 1024)).toFixed(1)} MB). Maximum allowed size is 5 MB.`);
+      setErrorMessage(`File size exceeds limit (${(file.size / (1024 * 1024)).toFixed(1)} MB). Max allowed size is 5 MB.`);
       return;
     }
 
     if (!isSupabaseConfigured() || !supabase) {
-      // Local demo mode: create temporary object URL
       const objectUrl = URL.createObjectURL(file);
       setImages((prev) => [...prev, objectUrl]);
       return;
@@ -110,16 +116,14 @@ export const ProductForm: React.FC<ProductFormProps> = ({
       const fileName = `${Date.now()}-${Math.random().toString(36).substring(2, 8)}.${fileExt}`;
       const filePath = `products/${fileName}`;
 
-      const { data, error } = await supabase.storage
+      const { error } = await supabase.storage
         .from('product-images')
         .upload(filePath, file, {
           cacheControl: '3600',
           upsert: false,
         });
 
-      if (error) {
-        throw error;
-      }
+      if (error) throw error;
 
       const { data: publicUrlData } = supabase.storage
         .from('product-images')
@@ -129,7 +133,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
         setImages((prev) => [...prev, publicUrlData.publicUrl]);
       }
     } catch (err: any) {
-      setErrorMessage(`Failed to upload image: ${err.message}`);
+      setErrorMessage(`Image upload failed: ${err.message}`);
     } finally {
       setUploading(false);
     }
@@ -138,7 +142,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name || !price) {
-      setErrorMessage('Product name and price are required.');
+      setErrorMessage('Product title and price are required.');
       return;
     }
 
@@ -168,252 +172,249 @@ export const ProductForm: React.FC<ProductFormProps> = ({
     if (res.success) {
       setSuccessMessage(
         isEditing
-          ? 'Product updated successfully!'
-          : 'Product created and added to catalog successfully!'
+          ? 'Product details updated successfully.'
+          : 'Product published to catalog successfully.'
       );
       setTimeout(() => {
         router.push('/admin/products');
-      }, 1200);
+      }, 1000);
     } else {
-      setErrorMessage(res.error || 'Failed to save product. Please check your inputs.');
+      setErrorMessage(res.error || 'Failed to save product. Please check your form inputs.');
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-8 max-w-5xl">
+    <form onSubmit={handleSubmit} className="space-y-6 max-w-5xl font-admin-body">
       {errorMessage && (
-        <div className="p-4 rounded-2xl bg-rose-50 border border-rose-200 text-xs text-rose-700 flex items-center gap-2">
-          <AlertCircle className="w-4 h-4 shrink-0" />
+        <div className="p-3.5 rounded-lg bg-rose-50 border border-rose-200/80 text-xs text-rose-800 flex items-center gap-2">
+          <AlertCircle className="w-4 h-4 shrink-0 text-rose-600" />
           <span>{errorMessage}</span>
         </div>
       )}
 
       {successMessage && (
-        <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 flex items-center gap-2">
-          <CheckCircle2 className="w-4 h-4 shrink-0" />
+        <div className="p-3.5 rounded-lg bg-emerald-50 border border-emerald-200/80 text-xs text-emerald-800 flex items-center gap-2">
+          <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-600" />
           <span>{successMessage}</span>
         </div>
       )}
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        {/* Left Column: Product Information */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        {/* Left 8 Cols: Main Form Inputs */}
         <div className="lg:col-span-8 space-y-6">
-          {/* Basic Details */}
-          <div className="bg-white p-6 sm:p-8 rounded-3xl border border-sand-200 shadow-sm space-y-5">
-            <h3 className="font-serif text-base sm:text-lg font-bold text-forest-950 pb-3 border-b border-sand-100">
-              Basic Product Details
-            </h3>
+          {/* General Information Card */}
+          <div className="bg-white p-5 sm:p-6 rounded-xl border border-zinc-200/80 shadow-[0_1px_3px_rgba(0,0,0,0.04)] space-y-4">
+            <h2 className="font-admin-heading text-sm font-semibold text-zinc-950 pb-2.5 border-b border-zinc-100">
+              General Information
+            </h2>
 
-            <div className="space-y-4">
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold uppercase tracking-wider text-charcoal-700">
-                  Product Name *
+            <div className="space-y-3.5">
+              <div className="space-y-1">
+                <label className="text-xs font-medium text-zinc-700">
+                  Product Title <span className="text-rose-500">*</span>
                 </label>
                 <input
                   type="text"
                   required
                   value={name}
                   onChange={handleNameChange}
-                  placeholder="e.g. Organic Moringa Powder"
-                  className="w-full bg-sand-50/70 border border-sand-300 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-charcoal-900 focus:outline-none focus:ring-2 focus:ring-forest-700"
+                  placeholder="e.g. Neem & Tulsi Herbal Soap"
+                  className="w-full bg-zinc-50/70 border border-zinc-200 rounded-lg px-3.5 py-2 text-xs sm:text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-1 focus:ring-forest-800 focus:border-forest-800 transition-colors"
                 />
               </div>
 
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold uppercase tracking-wider text-charcoal-700">
-                  URL Slug *
+              <div className="space-y-1">
+                <label className="text-xs font-medium text-zinc-700">
+                  URL Slug <span className="text-rose-500">*</span>
                 </label>
                 <input
                   type="text"
                   required
                   value={slug}
                   onChange={(e) => setSlug(e.target.value)}
-                  placeholder="e.g. organic-moringa-powder"
-                  className="w-full bg-sand-50/70 border border-sand-300 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-charcoal-900 font-mono focus:outline-none focus:ring-2 focus:ring-forest-700"
+                  placeholder="neem-tulsi-herbal-soap"
+                  className="w-full bg-zinc-50/70 border border-zinc-200 rounded-lg px-3.5 py-2 text-xs sm:text-sm text-zinc-900 font-mono placeholder:text-zinc-400 focus:outline-none focus:ring-1 focus:ring-forest-800 focus:border-forest-800 transition-colors"
                 />
               </div>
 
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold uppercase tracking-wider text-charcoal-700">
-                  Short Tagline / Subtitle *
+              <div className="space-y-1">
+                <label className="text-xs font-medium text-zinc-700">
+                  Tagline / Brief Summary <span className="text-rose-500">*</span>
                 </label>
                 <input
                   type="text"
                   required
                   value={shortDescription}
                   onChange={(e) => setShortDescription(e.target.value)}
-                  placeholder="e.g. Nutrient-dense superfood for vitality and daily stamina."
-                  className="w-full bg-sand-50/70 border border-sand-300 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-charcoal-900 focus:outline-none focus:ring-2 focus:ring-forest-700"
+                  placeholder="e.g. Nutrient-dense superfood powder packed with vitamins and plant protein."
+                  className="w-full bg-zinc-50/70 border border-zinc-200 rounded-lg px-3.5 py-2 text-xs sm:text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-1 focus:ring-forest-800 focus:border-forest-800 transition-colors"
                 />
               </div>
 
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold uppercase tracking-wider text-charcoal-700">
+              <div className="space-y-1">
+                <label className="text-xs font-medium text-zinc-700">
                   Full Story & Description
                 </label>
                 <textarea
                   rows={4}
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  placeholder="Describe the botanical origin, purity, and overall wellness benefits..."
-                  className="w-full bg-sand-50/70 border border-sand-300 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-charcoal-900 focus:outline-none focus:ring-2 focus:ring-forest-700"
+                  placeholder="Describe the botanical origin, extraction methods, bioactive compounds, and health benefits..."
+                  className="w-full bg-zinc-50/70 border border-zinc-200 rounded-lg px-3.5 py-2 text-xs sm:text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-1 focus:ring-forest-800 focus:border-forest-800 transition-colors"
                 />
               </div>
             </div>
           </div>
 
-          {/* Accordion Content Details */}
-          <div className="bg-white p-6 sm:p-8 rounded-3xl border border-sand-200 shadow-sm space-y-5">
-            <h3 className="font-serif text-base sm:text-lg font-bold text-forest-950 pb-3 border-b border-sand-100">
-              Wellness Tabs & Product Accordions
-            </h3>
+          {/* Ayurvedic Accordion Metadata */}
+          <div className="bg-white p-5 sm:p-6 rounded-xl border border-zinc-200/80 shadow-[0_1px_3px_rgba(0,0,0,0.04)] space-y-4">
+            <h2 className="font-admin-heading text-sm font-semibold text-zinc-950 pb-2.5 border-b border-zinc-100">
+              Botanical Details & Accordions
+            </h2>
 
-            <div className="space-y-4">
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold uppercase tracking-wider text-charcoal-700">
-                  Key Benefits (Separate points with semicolon ;)
+            <div className="space-y-3.5">
+              <div className="space-y-1">
+                <label className="text-xs font-medium text-zinc-700">
+                  Key Benefits <span className="text-[11px] text-zinc-400 font-normal">(Separate points with semicolon ;)</span>
                 </label>
                 <textarea
-                  rows={3}
+                  rows={2}
                   value={benefits}
                   onChange={(e) => setBenefits(e.target.value)}
-                  placeholder="Boosts energy; Supports immune defense; 100% Raw & Vegan"
-                  className="w-full bg-sand-50/70 border border-sand-300 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-charcoal-900 focus:outline-none focus:ring-2 focus:ring-forest-700"
+                  placeholder="Boosts daily stamina; Strengthens immune defenses; 100% Raw & Vegan"
+                  className="w-full bg-zinc-50/70 border border-zinc-200 rounded-lg px-3.5 py-2 text-xs sm:text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-1 focus:ring-forest-800 focus:border-forest-800 transition-colors"
                 />
               </div>
 
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold uppercase tracking-wider text-charcoal-700">
-                  Full Ingredients List
+              <div className="space-y-1">
+                <label className="text-xs font-medium text-zinc-700">
+                  Ingredients Formula
                 </label>
                 <textarea
                   rows={2}
                   value={ingredients}
                   onChange={(e) => setIngredients(e.target.value)}
-                  placeholder="100% Certified Pure Organic Moringa Leaf (Moringa oleifera) Powder."
-                  className="w-full bg-sand-50/70 border border-sand-300 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-charcoal-900 focus:outline-none focus:ring-2 focus:ring-forest-700"
+                  placeholder="Saponified Coconut Oil, Neem Leaf Extract, Tulsi Oil, Vegetable Glycerin."
+                  className="w-full bg-zinc-50/70 border border-zinc-200 rounded-lg px-3.5 py-2 text-xs sm:text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-1 focus:ring-forest-800 focus:border-forest-800 transition-colors"
                 />
               </div>
 
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold uppercase tracking-wider text-charcoal-700">
-                  How to Use / Recommended Dosage
+              <div className="space-y-1">
+                <label className="text-xs font-medium text-zinc-700">
+                  How to Use / Usage Guidelines
                 </label>
                 <textarea
                   rows={2}
                   value={howToUse}
                   onChange={(e) => setHowToUse(e.target.value)}
-                  placeholder="Mix 1 teaspoon into warm water or green smoothie daily."
-                  className="w-full bg-sand-50/70 border border-sand-300 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-charcoal-900 focus:outline-none focus:ring-2 focus:ring-forest-700"
+                  placeholder="Lather with warm water between hands, gently massage skin, and rinse thoroughly."
+                  className="w-full bg-zinc-50/70 border border-zinc-200 rounded-lg px-3.5 py-2 text-xs sm:text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-1 focus:ring-forest-800 focus:border-forest-800 transition-colors"
                 />
               </div>
             </div>
           </div>
 
-          {/* Product Media Gallery */}
-          <div className="bg-white p-6 sm:p-8 rounded-3xl border border-sand-200 shadow-sm space-y-5">
-            <h3 className="font-serif text-base sm:text-lg font-bold text-forest-950 pb-3 border-b border-sand-100">
-              Product Images
-            </h3>
+          {/* Product Gallery Imagery */}
+          <div className="bg-white p-5 sm:p-6 rounded-xl border border-zinc-200/80 shadow-[0_1px_3px_rgba(0,0,0,0.04)] space-y-4">
+            <h2 className="font-admin-heading text-sm font-semibold text-zinc-950 pb-2.5 border-b border-zinc-100">
+              Product Gallery Images
+            </h2>
 
-            {/* Upload Area */}
             <div className="space-y-4">
-              <div className="border-2 border-dashed border-sand-300 rounded-2xl p-6 text-center hover:border-forest-700 transition-colors bg-sand-50/40">
-                <input
-                  type="file"
-                  id="product-image-upload"
-                  accept="image/jpeg,image/png,image/webp,image/avif,image/jpg"
-                  onChange={handleFileUpload}
-                  className="hidden"
-                />
-                <label
-                  htmlFor="product-image-upload"
-                  className="cursor-pointer flex flex-col items-center justify-center gap-2"
-                >
-                  <div className="w-12 h-12 rounded-full bg-sage-100 text-forest-900 flex items-center justify-center">
-                    <Upload className="w-6 h-6 text-forest-800" />
-                  </div>
-                  <div>
-                    <span className="text-xs sm:text-sm font-bold text-forest-950 block">
-                      {uploading ? 'Uploading to Supabase Storage...' : 'Click to Upload High-Res Image'}
-                    </span>
-                    <span className="text-[11px] text-charcoal-500">
-                      Supports JPG, PNG, WebP, AVIF up to 5 MB
-                    </span>
-                  </div>
-                </label>
-              </div>
-
-              {/* Or add Image URL */}
+              {/* Add by URL */}
               <div className="flex gap-2">
                 <input
                   type="url"
                   value={imageUrlInput}
                   onChange={(e) => setImageUrlInput(e.target.value)}
-                  placeholder="Or paste external image URL (e.g. Unsplash)..."
-                  className="flex-1 bg-sand-50/70 border border-sand-300 rounded-xl px-4 py-2 text-xs sm:text-sm text-charcoal-900 focus:outline-none focus:ring-2 focus:ring-forest-700"
+                  placeholder="Paste image URL (e.g. Unsplash or CDN link)..."
+                  className="flex-1 bg-zinc-50/70 border border-zinc-200 rounded-lg px-3.5 py-2 text-xs sm:text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-1 focus:ring-forest-800 focus:border-forest-800 transition-colors"
                 />
                 <button
                   type="button"
                   onClick={handleAddImageUrl}
-                  className="bg-forest-900 text-cream-50 px-4 py-2 rounded-xl text-xs font-bold hover:bg-forest-800 transition-colors"
+                  className="bg-zinc-100 hover:bg-zinc-200/70 text-zinc-800 font-medium px-3.5 py-2 rounded-lg text-xs transition-colors border border-zinc-200"
                 >
                   Add URL
                 </button>
               </div>
 
-              {/* Uploaded Thumbnails with Reordering */}
+              {/* Upload File to Storage */}
+              <div className="border border-dashed border-zinc-300 rounded-lg p-5 text-center bg-zinc-50/50 hover:bg-zinc-50 transition-colors">
+                <input
+                  type="file"
+                  id="product-image-upload"
+                  accept="image/jpeg,image/png,image/webp,image/avif"
+                  onChange={handleFileUpload}
+                  className="hidden"
+                  disabled={uploading}
+                />
+                <label
+                  htmlFor="product-image-upload"
+                  className="cursor-pointer flex flex-col items-center justify-center space-y-1.5"
+                >
+                  <div className="w-8 h-8 rounded-full bg-white border border-zinc-200 flex items-center justify-center text-zinc-600 shadow-xs">
+                    {uploading ? (
+                      <Loader2 className="w-4 h-4 animate-spin text-forest-800" />
+                    ) : (
+                      <Upload className="w-4 h-4" />
+                    )}
+                  </div>
+                  <div className="text-xs font-medium text-zinc-800">
+                    {uploading ? 'Uploading to Supabase storage...' : 'Click to upload product image'}
+                  </div>
+                  <p className="text-[11px] text-zinc-400">JPG, PNG, WebP up to 5MB</p>
+                </label>
+              </div>
+
+              {/* Uploaded Images List */}
               {images.length > 0 && (
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-2">
-                  {images.map((url, idx) => (
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+                  {images.map((img, idx) => (
                     <div
                       key={idx}
-                      className="group relative aspect-square rounded-xl overflow-hidden bg-sand-100 border border-sand-300 shadow-sm"
+                      className="relative group rounded-lg border border-zinc-200 overflow-hidden bg-zinc-100 aspect-square"
                     >
                       <Image
-                        src={url}
-                        alt={`Product image ${idx + 1}`}
+                        src={img}
+                        alt={`Image ${idx + 1}`}
                         fill
                         className="object-cover"
-                        sizes="150px"
+                        sizes="120px"
                       />
-                      {idx === 0 && (
-                        <div className="absolute top-2 left-2 bg-forest-900 text-cream-50 text-[9px] font-bold px-2 py-0.5 rounded-full shadow-sm">
-                          Cover
-                        </div>
-                      )}
-                      
-                      {/* Image Action Controls */}
-                      <div className="absolute inset-0 bg-charcoal-950/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-1.5 p-2">
+                      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-1.5 p-1">
                         {idx > 0 && (
                           <button
                             type="button"
                             onClick={() => handleMoveImage(idx, 'up')}
-                            className="w-7 h-7 bg-white/90 text-charcoal-800 rounded-full flex items-center justify-center hover:bg-white transition-colors"
-                            title="Move Earlier"
+                            className="p-1 rounded bg-white text-zinc-800 hover:bg-zinc-100"
+                            title="Move left"
                           >
-                            <ArrowUp className="w-3.5 h-3.5" />
+                            <ArrowUp className="w-3 h-3 rotate-[-90deg]" />
                           </button>
                         )}
                         {idx < images.length - 1 && (
                           <button
                             type="button"
                             onClick={() => handleMoveImage(idx, 'down')}
-                            className="w-7 h-7 bg-white/90 text-charcoal-800 rounded-full flex items-center justify-center hover:bg-white transition-colors"
-                            title="Move Later"
+                            className="p-1 rounded bg-white text-zinc-800 hover:bg-zinc-100"
+                            title="Move right"
                           >
-                            <ArrowDown className="w-3.5 h-3.5" />
+                            <ArrowDown className="w-3 h-3 rotate-[-90deg]" />
                           </button>
                         )}
                         <button
                           type="button"
                           onClick={() => handleRemoveImage(idx)}
-                          className="w-7 h-7 bg-rose-600 text-white rounded-full flex items-center justify-center hover:bg-rose-700 transition-colors"
-                          title="Remove Image"
+                          className="p-1 rounded bg-rose-600 text-white hover:bg-rose-700"
+                          title="Remove image"
                         >
-                          <X className="w-3.5 h-3.5" />
+                          <X className="w-3 h-3" />
                         </button>
                       </div>
+                      <span className="absolute bottom-1 left-1 bg-black/60 text-white text-[9px] px-1.5 py-0.5 rounded font-mono">
+                        #{idx + 1}
+                      </span>
                     </div>
                   ))}
                 </div>
@@ -422,18 +423,18 @@ export const ProductForm: React.FC<ProductFormProps> = ({
           </div>
         </div>
 
-        {/* Right Column: Pricing, Category, Status & Save CTA */}
-        <div className="lg:col-span-4 space-y-6 sticky top-28">
-          {/* Inventory & Pricing */}
-          <div className="bg-white p-6 sm:p-8 rounded-3xl border border-sand-200 shadow-sm space-y-5">
-            <h3 className="font-serif text-base sm:text-lg font-bold text-forest-950 pb-3 border-b border-sand-100">
-              Pricing & Stock
-            </h3>
+        {/* Right 4 Cols: Pricing, Inventory, & Publication */}
+        <div className="lg:col-span-4 space-y-6">
+          {/* Pricing & Stock Card */}
+          <div className="bg-white p-5 rounded-xl border border-zinc-200/80 shadow-[0_1px_3px_rgba(0,0,0,0.04)] space-y-4">
+            <h2 className="font-admin-heading text-sm font-semibold text-zinc-950 pb-2.5 border-b border-zinc-100">
+              Pricing & Inventory
+            </h2>
 
-            <div className="space-y-4">
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold uppercase tracking-wider text-charcoal-700">
-                  Sale Price (₹ INR) *
+            <div className="space-y-3.5">
+              <div className="space-y-1">
+                <label className="text-xs font-medium text-zinc-700">
+                  Selling Price (₹) <span className="text-rose-500">*</span>
                 </label>
                 <input
                   type="number"
@@ -441,51 +442,55 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                   required
                   value={price}
                   onChange={(e) => setPrice(e.target.value)}
-                  placeholder="449"
-                  className="w-full bg-sand-50/70 border border-sand-300 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-charcoal-900 font-bold focus:outline-none focus:ring-2 focus:ring-forest-700"
+                  placeholder="499"
+                  className="w-full bg-zinc-50/70 border border-zinc-200 rounded-lg px-3.5 py-2 text-xs sm:text-sm text-zinc-900 font-admin-heading tabular-nums focus:outline-none focus:ring-1 focus:ring-forest-800 focus:border-forest-800 transition-colors"
                 />
               </div>
 
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold uppercase tracking-wider text-charcoal-700">
-                  Original MRP (₹ INR)
+              <div className="space-y-1">
+                <label className="text-xs font-medium text-zinc-700">
+                  Original / Strikethrough Price (₹)
                 </label>
                 <input
                   type="number"
                   step="1"
                   value={originalPrice}
                   onChange={(e) => setOriginalPrice(e.target.value)}
-                  placeholder="599"
-                  className="w-full bg-sand-50/70 border border-sand-300 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-charcoal-900 focus:outline-none focus:ring-2 focus:ring-forest-700"
+                  placeholder="699"
+                  className="w-full bg-zinc-50/70 border border-zinc-200 rounded-lg px-3.5 py-2 text-xs sm:text-sm text-zinc-900 font-admin-heading tabular-nums focus:outline-none focus:ring-1 focus:ring-forest-800 focus:border-forest-800 transition-colors"
                 />
               </div>
 
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold uppercase tracking-wider text-charcoal-700">
-                  Stock Units in Inventory *
+              <div className="space-y-1">
+                <label className="text-xs font-medium text-zinc-700">
+                  Current Stock Units <span className="text-rose-500">*</span>
                 </label>
                 <input
                   type="number"
+                  step="1"
                   required
                   value={stock}
                   onChange={(e) => setStock(e.target.value)}
                   placeholder="50"
-                  className="w-full bg-sand-50/70 border border-sand-300 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-charcoal-900 focus:outline-none focus:ring-2 focus:ring-forest-700"
+                  className="w-full bg-zinc-50/70 border border-zinc-200 rounded-lg px-3.5 py-2 text-xs sm:text-sm text-zinc-900 font-admin-heading tabular-nums focus:outline-none focus:ring-1 focus:ring-forest-800 focus:border-forest-800 transition-colors"
                 />
+                <p className="text-[11px] text-zinc-400">
+                  Below 15 triggers operational low-stock warning.
+                </p>
               </div>
 
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold uppercase tracking-wider text-charcoal-700">
-                  Category *
+              <div className="space-y-1 pt-1">
+                <label className="text-xs font-medium text-zinc-700">
+                  Category
                 </label>
                 <select
                   value={categoryId}
                   onChange={(e) => setCategoryId(e.target.value)}
-                  className="w-full bg-sand-50/70 border border-sand-300 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-charcoal-900 focus:outline-none focus:ring-2 focus:ring-forest-700"
+                  className="w-full bg-zinc-50/70 border border-zinc-200 rounded-lg px-3.5 py-2 text-xs sm:text-sm text-zinc-800 focus:outline-none focus:ring-1 focus:ring-forest-800 focus:border-forest-800 transition-colors"
                 >
-                  {categories.map((cat) => (
-                    <option key={cat.id} value={cat.id}>
-                      {cat.name}
+                  {categories.map((c) => (
+                    <option key={c.id} value={c.id}>
+                      {c.name}
                     </option>
                   ))}
                 </select>
@@ -493,56 +498,56 @@ export const ProductForm: React.FC<ProductFormProps> = ({
             </div>
           </div>
 
-          {/* Visibility & Badges */}
-          <div className="bg-white p-6 sm:p-8 rounded-3xl border border-sand-200 shadow-sm space-y-4">
-            <h3 className="font-serif text-base sm:text-lg font-bold text-forest-950 pb-3 border-b border-sand-100">
-              Visibility Settings
-            </h3>
+          {/* Visibility & Organization */}
+          <div className="bg-white p-5 rounded-xl border border-zinc-200/80 shadow-[0_1px_3px_rgba(0,0,0,0.04)] space-y-3.5">
+            <h2 className="font-admin-heading text-sm font-semibold text-zinc-950 pb-2.5 border-b border-zinc-100">
+              Visibility & Publishing
+            </h2>
 
-            <div className="space-y-3">
-              <label className="flex items-center gap-3 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={isActive}
-                  onChange={(e) => setIsActive(e.target.checked)}
-                  className="w-4 h-4 text-forest-900 rounded focus:ring-forest-700"
-                />
-                <span className="text-xs font-bold text-charcoal-800">
-                  Active in Catalog (Visible to customers)
-                </span>
-              </label>
+            <label className="flex items-center gap-2.5 cursor-pointer py-1">
+              <input
+                type="checkbox"
+                checked={isActive}
+                onChange={(e) => setIsActive(e.target.checked)}
+                className="w-4 h-4 rounded text-forest-800 border-zinc-300 focus:ring-forest-700"
+              />
+              <div>
+                <span className="text-xs font-medium text-zinc-900 block">Active in Store</span>
+                <span className="text-[11px] text-zinc-400 block">Visible for customers to buy</span>
+              </div>
+            </label>
 
-              <label className="flex items-center gap-3 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={featured}
-                  onChange={(e) => setFeatured(e.target.checked)}
-                  className="w-4 h-4 text-forest-900 rounded focus:ring-forest-700"
-                />
-                <span className="text-xs font-bold text-charcoal-800">
-                  Showcase in Nature&apos;s Best Sellers (Homepage)
-                </span>
-              </label>
+            <label className="flex items-center gap-2.5 cursor-pointer py-1">
+              <input
+                type="checkbox"
+                checked={featured}
+                onChange={(e) => setFeatured(e.target.checked)}
+                className="w-4 h-4 rounded text-forest-800 border-zinc-300 focus:ring-forest-700"
+              />
+              <div>
+                <span className="text-xs font-medium text-zinc-900 block">Featured Bestseller</span>
+                <span className="text-[11px] text-zinc-400 block">Highlight on storefront homepage</span>
+              </div>
+            </label>
+
+            <div className="pt-3 border-t border-zinc-100 space-y-2">
+              <button
+                type="submit"
+                disabled={submitting}
+                className="w-full inline-flex items-center justify-center gap-2 bg-forest-900 text-white hover:bg-forest-800 font-medium px-4 py-2.5 rounded-lg text-xs transition-colors shadow-sm disabled:opacity-50"
+              >
+                {submitting && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
+                <span>{isEditing ? 'Save Changes' : 'Publish Product'}</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => router.push('/admin/products')}
+                className="w-full text-center text-xs font-medium text-zinc-500 hover:text-zinc-800 py-1.5 transition-colors"
+              >
+                Cancel
+              </button>
             </div>
-          </div>
-
-          {/* Submit Action */}
-          <div className="space-y-3">
-            <button
-              type="submit"
-              disabled={submitting}
-              className="w-full bg-forest-900 hover:bg-forest-800 text-cream-50 font-bold py-3.5 px-6 rounded-2xl transition-all shadow-md hover:shadow-lg text-xs sm:text-sm flex items-center justify-center gap-2 disabled:opacity-50"
-            >
-              <span>{submitting ? 'Saving Product...' : isEditing ? 'Update Product' : 'Publish Product to Catalog'}</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => router.push('/admin/products')}
-              className="w-full bg-sand-100 hover:bg-sand-200 text-forest-950 font-semibold py-2.5 px-4 rounded-xl transition-colors text-xs text-center"
-            >
-              Cancel & Back to Products
-            </button>
           </div>
         </div>
       </div>

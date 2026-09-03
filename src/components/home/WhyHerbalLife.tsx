@@ -34,7 +34,7 @@ export const WhyHerbalLife: React.FC = () => {
             Our Standard of Purity
           </span>
           <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-forest-950">
-            Why Choose Mustafa Life
+            Why Choose Herbal E Com Life
           </h2>
           <p className="text-xs sm:text-sm text-charcoal-600">
             We hold our products to the highest standards of clean holistic wellness.

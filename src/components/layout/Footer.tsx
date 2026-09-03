@@ -1,8 +1,16 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Leaf, ShieldCheck, Heart, Sparkles, Instagram, Facebook, Twitter, Youtube, ArrowRight } from 'lucide-react';
 
 export const Footer: React.FC = () => {
+  const pathname = usePathname();
+
+  if (pathname?.startsWith('/admin')) {
+    return null;
+  }
   return (
     <footer className="bg-forest-950 text-cream-100 border-t border-forest-900 mt-20">
       {/* Brand Trust Strip */}
@@ -42,7 +50,7 @@ export const Footer: React.FC = () => {
               <div className="w-8 h-8 rounded-full bg-sage-400 flex items-center justify-center text-forest-950 font-bold">
                 <Leaf className="w-4 h-4" />
               </div>
-              <span className="font-serif text-xl font-bold tracking-tight text-white">MUSTAFA LIFE</span>
+              <span className="font-serif text-xl font-bold tracking-tight text-white">HERBAL E COM LIFE</span>
             </Link>
             <p className="text-xs text-sage-200/80 leading-relaxed max-w-sm">
               Naturally Better. Everyday. We formulate clean, honest, and high-potency herbal remedies and nutrition designed to elevate daily health, skin vitality, and hair wellness.
@@ -78,13 +86,8 @@ export const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
-                <Link href="/category/herbal-wellness" className="hover:text-white transition-colors">
-                  Herbal Wellness
-                </Link>
-              </li>
-              <li>
-                <Link href="/category/natural-skincare" className="hover:text-white transition-colors">
-                  Natural Skincare
+                <Link href="/category/herbal-skincare" className="hover:text-white transition-colors">
+                  Herbal Skincare
                 </Link>
               </li>
               <li>
@@ -93,8 +96,18 @@ export const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
-                <Link href="/category/healthy-nutrition" className="hover:text-white transition-colors">
-                  Healthy Nutrition
+                <Link href="/category/bath-and-body" className="hover:text-white transition-colors">
+                  Bath & Body
+                </Link>
+              </li>
+              <li>
+                <Link href="/category/organic-essentials" className="hover:text-white transition-colors">
+                  Organic Essentials
+                </Link>
+              </li>
+              <li>
+                <Link href="/category/natural-wellness" className="hover:text-white transition-colors">
+                  Natural Wellness
                 </Link>
               </li>
             </ul>
@@ -125,7 +138,7 @@ export const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
-                <span className="text-[11px] text-sage-400">care@mustafalife.com</span>
+                <span className="text-[11px] text-sage-400">care@herbalecomlife.com</span>
               </li>
             </ul>
           </div>
@@ -191,7 +204,7 @@ export const Footer: React.FC = () => {
 
         {/* Bottom Bar */}
         <div className="border-t border-forest-900/80 mt-12 pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-sage-400 gap-4">
-          <p>© {new Date().getFullYear()} MUSTAFA LIFE India. All rights reserved. Naturally Better. Everyday.</p>
+          <p>© {new Date().getFullYear()} HERBAL E COM LIFE India. All rights reserved. Naturally Better. Everyday.</p>
           <div className="flex items-center space-x-6 text-[11px]">
             <Link href="/shop" className="hover:text-white transition-colors">
               Privacy Policy
