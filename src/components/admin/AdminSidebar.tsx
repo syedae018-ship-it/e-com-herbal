@@ -6,9 +6,17 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import {
   LayoutDashboard,
+  Home,
+  Quote,
+  Image as ImageIcon,
   Package,
-  PlusCircle,
+  Layers,
   ShoppingBag,
+  Users,
+  MessageSquareQuote,
+  Settings,
+  PanelBottom,
+  Palette,
   LogOut,
   ExternalLink,
   Leaf,
@@ -34,44 +42,47 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
     router.push('/admin/login');
   };
 
-  const navGroups = [
+  const navSections = [
     {
-      group: 'OVERVIEW',
+      group: 'CMS & Customization',
       items: [
         { label: 'Dashboard', href: '/admin', icon: LayoutDashboard },
+        { label: 'Themes & Appearance', href: '/admin/themes', icon: Palette },
+        { label: 'Homepage Content', href: '/admin/homepage', icon: Home },
+        { label: 'Taglines & Text', href: '/admin/taglines', icon: Quote },
+        { label: 'Image Management', href: '/admin/images', icon: ImageIcon },
+        { label: 'Testimonials', href: '/admin/testimonials', icon: MessageSquareQuote },
+        { label: 'Website Settings', href: '/admin/settings', icon: Settings },
+        { label: 'Footer Settings', href: '/admin/footer', icon: PanelBottom },
       ],
     },
     {
-      group: 'CATALOG',
+      group: 'Store Management',
       items: [
         { label: 'Products', href: '/admin/products', icon: Package },
-        { label: 'Add Product', href: '/admin/products/new', icon: PlusCircle },
-      ],
-    },
-    {
-      group: 'FULFILLMENT',
-      items: [
+        { label: 'Categories', href: '/admin/categories', icon: Layers },
         { label: 'Orders', href: '/admin/orders', icon: ShoppingBag },
+        { label: 'Customers', href: '/admin/customers', icon: Users },
       ],
     },
   ];
 
   const sidebarContent = (
-    <div className="flex flex-col h-full justify-between p-4 bg-white text-zinc-800 border-r border-zinc-200/80 font-admin-body select-none">
-      <div className="space-y-6">
-        {/* Brand & Store Identity */}
-        <div className="flex items-center justify-between pb-4 border-b border-zinc-100">
+    <div className="flex flex-col h-full justify-between p-4 bg-forest-950 text-cream-100 border-r border-forest-900 select-none overflow-y-auto">
+      <div className="space-y-5">
+        {/* Brand */}
+        <div className="flex items-center justify-between pb-4 border-b border-forest-900">
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-lg bg-forest-900 text-white flex items-center justify-center font-bold shadow-sm">
               <Leaf className="w-4 h-4 text-emerald-300" />
             </div>
             <div>
-              <div className="font-admin-heading text-sm font-semibold tracking-tight text-zinc-950 flex items-center gap-1.5">
-                <span>HERBAL E COM LIFE</span>
-              </div>
-              <div className="flex items-center gap-1 text-[10px] text-zinc-400 font-medium tracking-wide uppercase">
-                <ShieldCheck className="w-3 h-3 text-forest-700" />
-                <span>Store Ops</span>
+              <span className="font-serif text-base font-bold text-white tracking-tight">
+                HERBAL E COM LIFE
+              </span>
+              <div className="flex items-center gap-1 text-[10px] text-sage-300 font-bold uppercase tracking-wider">
+                <ShieldCheck className="w-3 h-3 text-emerald-400" />
+                <span>Admin Portal</span>
               </div>
             </div>
           </div>
@@ -81,86 +92,73 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
             <button
               onClick={onMobileClose}
               aria-label="Close sidebar"
-              className="md:hidden p-1.5 rounded-lg text-zinc-400 hover:text-zinc-700 hover:bg-zinc-100 transition-colors"
+              className="md:hidden p-1.5 rounded-lg text-sage-400 hover:text-white hover:bg-forest-900 transition-colors"
             >
               <X className="w-4 h-4" />
             </button>
           )}
         </div>
 
-        {/* Admin Profile Card */}
-        <div className="bg-zinc-50 border border-zinc-200/70 p-2.5 rounded-lg flex items-center gap-2.5">
-          <div className="w-7 h-7 rounded-full bg-forest-900/10 text-forest-900 font-semibold text-xs flex items-center justify-center shrink-0">
-            {(profile?.full_name || 'A')[0].toUpperCase()}
-          </div>
-          <div className="min-w-0 flex-1">
-            <p className="text-xs font-medium text-zinc-900 truncate">
-              {profile?.full_name || 'Store Admin'}
-            </p>
-            <p className="text-[10px] text-zinc-400 truncate">
-              {profile?.email || 'admin@herbalecomlife.com'}
-            </p>
-          </div>
+        {/* User Card */}
+        <div className="bg-forest-900/60 p-2.5 rounded-xl border border-forest-800/80">
+          <p className="text-xs font-bold text-white truncate">
+            {profile?.full_name || 'Store Administrator'}
+          </p>
+          <p className="text-[10px] text-sage-400 truncate">{profile?.email || 'admin@herbalecomlife.com'}</p>
         </div>
 
-        {/* Grouped Navigation Links */}
+        {/* Nav Sections */}
         <nav className="space-y-4">
-          {navGroups.map((grp) => (
-            <div key={grp.group} className="space-y-1">
-              <div className="px-2.5 text-[10px] font-semibold text-zinc-400 tracking-wider uppercase">
-                {grp.group}
-              </div>
-              <div className="space-y-0.5">
-                {grp.items.map((item) => {
-                  const Icon = item.icon;
-                  const isActive =
-                    item.href === '/admin'
-                      ? pathname === '/admin'
-                      : pathname.startsWith(item.href);
+          {navSections.map((group, gIdx) => (
+            <div key={gIdx} className="space-y-1">
+              <p className="text-[10px] font-bold uppercase tracking-widest text-forest-400 px-3 py-1">
+                {group.group}
+              </p>
+              {group.items.map((item) => {
+                const Icon = item.icon;
+                const isActive =
+                  item.href === '/admin'
+                    ? pathname === '/admin'
+                    : pathname.startsWith(item.href);
 
-                  return (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      onClick={onMobileClose}
-                      className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium transition-all duration-150 ${
-                        isActive
-                          ? 'bg-forest-900/8 text-forest-950 font-semibold border-l-2 border-forest-900 rounded-l-none pl-2.5'
-                          : 'text-zinc-600 hover:text-zinc-950 hover:bg-zinc-50'
-                      }`}
-                    >
-                      <Icon
-                        className={`w-4 h-4 shrink-0 transition-colors ${
-                          isActive ? 'text-forest-900' : 'text-zinc-400 group-hover:text-zinc-600'
-                        }`}
-                      />
-                      <span>{item.label}</span>
-                    </Link>
-                  );
-                })}
-              </div>
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={onMobileClose}
+                    className={`flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all ${
+                      isActive
+                        ? 'bg-sage-400 text-forest-950 shadow-sm'
+                        : 'text-sage-200/80 hover:bg-forest-900 hover:text-white'
+                    }`}
+                  >
+                    <Icon className="w-4 h-4 shrink-0" />
+                    <span>{item.label}</span>
+                  </Link>
+                );
+              })}
             </div>
           ))}
         </nav>
       </div>
 
-      {/* Bottom Footer Actions */}
-      <div className="space-y-1 pt-4 border-t border-zinc-100">
+      {/* Bottom Actions */}
+      <div className="space-y-2 pt-4 border-t border-forest-900 mt-4">
         <Link
           href="/"
           target="_blank"
-          className="flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium text-zinc-600 hover:text-zinc-950 hover:bg-zinc-50 transition-colors"
+          className="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium text-sage-300 hover:bg-forest-900 hover:text-white transition-colors"
         >
           <span className="flex items-center gap-2">
-            <ExternalLink className="w-3.5 h-3.5 text-zinc-400" />
+            <ExternalLink className="w-3.5 h-3.5" />
             <span>View Live Store</span>
           </span>
-          <span className="text-[10px] text-zinc-400 uppercase">Public</span>
+          <span className="text-[10px] text-sage-400 uppercase">Public</span>
         </Link>
 
         <button
           onClick={handleLogout}
-          className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium text-rose-700 hover:bg-rose-50 hover:text-rose-800 transition-colors"
+          className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-semibold text-rose-400 hover:bg-rose-950/40 hover:text-rose-300 transition-colors"
         >
           <LogOut className="w-3.5 h-3.5" />
           <span>Sign Out</span>
@@ -171,8 +169,8 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
 
   return (
     <>
-      {/* Desktop Sidebar (fixed w-60) */}
-      <aside className="hidden md:flex w-60 shrink-0 h-screen sticky top-0">
+      {/* Desktop Sidebar */}
+      <aside className="hidden md:flex w-64 shrink-0 h-screen sticky top-0">
         {sidebarContent}
       </aside>
 
@@ -191,3 +189,4 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
     </>
   );
 };
+

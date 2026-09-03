@@ -3,16 +3,266 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    --background: 40 33% 97%;
-    --foreground: 150 10% 12%;
+  /* ==========================================================================
+     THEME 1: Herbal Beige & Brown (Default)
+     ========================================================================== */
+  :root,
+  [data-theme="herbal-beige-brown"] {
+    --color-forest-50: #F5EFE4;
+    --color-forest-100: #E8DCCB;
+    --color-forest-200: #D8C3A5;
+    --color-forest-300: #A1AC88;
+    --color-forest-400: #808D63;
+    --color-forest-500: #66724A;
+    --color-forest-600: #7D5F47;
+    --color-forest-700: #6B4F3A;
+    --color-forest-800: #553E2D;
+    --color-forest-900: #6B4F3A;
+    --color-forest-950: #3F2E22;
+
+    --color-sage-50: #F5EFE4;
+    --color-sage-100: #E8DCCB;
+    --color-sage-200: #D8C3A5;
+    --color-sage-300: #808D63;
+    --color-sage-400: #66724A;
+    --color-sage-500: #56613E;
+    --color-sage-600: #465033;
+    --color-sage-700: #384129;
+    --color-sage-800: #2C3320;
+    --color-sage-900: #202618;
+
+    --color-cream-50: #FFFDF8;
+    --color-cream-100: #F5EFE4;
+    --color-cream-200: #E8DCCB;
+    --color-cream-300: #D8C3A5;
+    --color-cream-400: #C4AD8E;
+
+    --color-sand-50: #FFFDF8;
+    --color-sand-100: #F5EFE4;
+    --color-sand-200: #D8C3A5;
+    --color-sand-300: #C4AD8E;
+    --color-sand-400: #A89173;
+
+    --color-charcoal-50: #FAF7F2;
+    --color-charcoal-100: #EFECE6;
+    --color-charcoal-200: #DCD8D0;
+    --color-charcoal-400: #A6968D;
+    --color-charcoal-500: #8A7970;
+    --color-charcoal-600: #6B5B52;
+    --color-charcoal-700: #4A3B32;
+    --color-charcoal-800: #3F2E22;
+    --color-charcoal-900: #2E241E;
+    --color-charcoal-950: #1D1612;
+
+    --theme-bg: #F5EFE4;
+    --theme-surface: #FFFDF8;
+    --theme-primary: #6B4F3A;
+    --theme-primary-hover: #553E2D;
+    --theme-secondary: #66724A;
+    --theme-accent: #D8C3A5;
+    --theme-text: #2E241E;
+    --theme-text-muted: #6B5B52;
+    --theme-border: #D8C3A5;
+    --theme-header: rgba(255, 253, 248, 0.95);
+    --theme-footer: #3F2E22;
   }
 
+  /* ==========================================================================
+     THEME 2: Fresh Green Contrast
+     ========================================================================== */
+  [data-theme="fresh-green-contrast"] {
+    --color-forest-50: #EAF3E4;
+    --color-forest-100: #DFECD9;
+    --color-forest-200: #CFE1C6;
+    --color-forest-300: #A9C49D;
+    --color-forest-400: #8EAD80;
+    --color-forest-500: #5F7F55;
+    --color-forest-600: #4F7F60;
+    --color-forest-700: #3E6E52;
+    --color-forest-800: #2C5E45;
+    --color-forest-900: #1F4D36;
+    --color-forest-950: #183C2A;
+
+    --color-sage-50: #EAF3E4;
+    --color-sage-100: #DFECD9;
+    --color-sage-200: #CFE1C6;
+    --color-sage-300: #A9C49D;
+    --color-sage-400: #8EAD80;
+    --color-sage-500: #749267;
+    --color-sage-600: #5C7650;
+    --color-sage-700: #465C3D;
+    --color-sage-800: #32432B;
+    --color-sage-900: #202D1B;
+
+    --color-cream-50: #FFFDF5;
+    --color-cream-100: #EAF3E4;
+    --color-cream-200: #CFE1C6;
+    --color-cream-300: #B9D4AE;
+    --color-cream-400: #9EC091;
+
+    --color-sand-50: #F4FAF0;
+    --color-sand-100: #EAF3E4;
+    --color-sand-200: #CFE1C6;
+    --color-sand-300: #B3CCA9;
+    --color-sand-400: #98B58D;
+
+    --color-charcoal-50: #F2F7F0;
+    --color-charcoal-100: #E2EDE0;
+    --color-charcoal-200: #C4D6C1;
+    --color-charcoal-400: #809A8D;
+    --color-charcoal-500: #627A6D;
+    --color-charcoal-600: #4C6356;
+    --color-charcoal-700: #2B5040;
+    --color-charcoal-800: #1F4032;
+    --color-charcoal-900: #173025;
+    --color-charcoal-950: #0D1C15;
+
+    --theme-bg: #EAF3E4;
+    --theme-surface: #FFFDF5;
+    --theme-primary: #1F4D36;
+    --theme-primary-hover: #183C2A;
+    --theme-secondary: #5F7F55;
+    --theme-accent: #8EAD80;
+    --theme-text: #173025;
+    --theme-text-muted: #4C6356;
+    --theme-border: #CFE1C6;
+    --theme-header: rgba(255, 253, 245, 0.95);
+    --theme-footer: #183C2A;
+  }
+
+  /* ==========================================================================
+     THEME 3: Eucalyptus & Sea Salt
+     ========================================================================== */
+  [data-theme="eucalyptus-sea-salt"] {
+    --color-forest-50: #F4F6F2;
+    --color-forest-100: #E2EAE5;
+    --color-forest-200: #C8D8D0;
+    --color-forest-300: #A8BCB2;
+    --color-forest-400: #8FA69A;
+    --color-forest-500: #749389;
+    --color-forest-600: #617F75;
+    --color-forest-700: #4E6B61;
+    --color-forest-800: #3D5A50;
+    --color-forest-900: #4E6B61;
+    --color-forest-950: #29443C;
+
+    --color-sage-50: #F4F6F2;
+    --color-sage-100: #E2EAE5;
+    --color-sage-200: #C8D8D0;
+    --color-sage-300: #A8BCB2;
+    --color-sage-400: #8FA69A;
+    --color-sage-500: #758D81;
+    --color-sage-600: #5D7368;
+    --color-sage-700: #485B52;
+    --color-sage-800: #35443D;
+    --color-sage-900: #242F2A;
+
+    --color-cream-50: #FFFFFF;
+    --color-cream-100: #F4F6F2;
+    --color-cream-200: #E2EAE5;
+    --color-cream-300: #C8D8D0;
+    --color-cream-400: #B8B3A5;
+
+    --color-sand-50: #FAFCF9;
+    --color-sand-100: #F4F6F2;
+    --color-sand-200: #C8D8D0;
+    --color-sand-300: #B8B3A5;
+    --color-sand-400: #9E998B;
+
+    --color-charcoal-50: #F7F9F7;
+    --color-charcoal-100: #ECF0EB;
+    --color-charcoal-200: #D5DDD3;
+    --color-charcoal-400: #8FA69A;
+    --color-charcoal-500: #6D857E;
+    --color-charcoal-600: #586E67;
+    --color-charcoal-700: #475954;
+    --color-charcoal-800: #374843;
+    --color-charcoal-900: #2C3935;
+    --color-charcoal-950: #1B2421;
+
+    --theme-bg: #F4F6F2;
+    --theme-surface: #FFFFFF;
+    --theme-primary: #4E6B61;
+    --theme-primary-hover: #3D5A50;
+    --theme-secondary: #8FA69A;
+    --theme-accent: #B8B3A5;
+    --theme-text: #2C3935;
+    --theme-text-muted: #586E67;
+    --theme-border: #C8D8D0;
+    --theme-header: rgba(244, 246, 242, 0.95);
+    --theme-footer: #29443C;
+  }
+
+  /* ==========================================================================
+     THEME 4: Vetiver & Forest Moss
+     ========================================================================== */
+  [data-theme="vetiver-forest-moss"] {
+    --color-forest-50: #E8E0D2;
+    --color-forest-100: #D8CEBC;
+    --color-forest-200: #C9B99C;
+    --color-forest-300: #9EA983;
+    --color-forest-400: #818E63;
+    --color-forest-500: #66724A;
+    --color-forest-600: #5D6D42;
+    --color-forest-700: #4E5B37;
+    --color-forest-800: #343E24;
+    --color-forest-900: #3F4A2D;
+    --color-forest-950: #2E3526;
+
+    --color-sage-50: #E8E0D2;
+    --color-sage-100: #D8CEBC;
+    --color-sage-200: #C9B99C;
+    --color-sage-300: #9A7B5D;
+    --color-sage-400: #66724A;
+    --color-sage-500: #56613E;
+    --color-sage-600: #475033;
+    --color-sage-700: #394129;
+    --color-sage-800: #2C3320;
+    --color-sage-900: #202618;
+
+    --color-cream-50: #FAF7F0;
+    --color-cream-100: #E8E0D2;
+    --color-cream-200: #C9B99C;
+    --color-cream-300: #B5A384;
+    --color-cream-400: #9A7B5D;
+
+    --color-sand-50: #F5F0E6;
+    --color-sand-100: #E8E0D2;
+    --color-sand-200: #C9B99C;
+    --color-sand-300: #B5A384;
+    --color-sand-400: #9A7B5D;
+
+    --color-charcoal-50: #F4F1EA;
+    --color-charcoal-100: #E6E1D5;
+    --color-charcoal-200: #CCC4B4;
+    --color-charcoal-400: #919C88;
+    --color-charcoal-500: #747E6C;
+    --color-charcoal-600: #586150;
+    --color-charcoal-700: #3C4433;
+    --color-charcoal-800: #2E3526;
+    --color-charcoal-900: #242A20;
+    --color-charcoal-950: #161A14;
+
+    --theme-bg: #E8E0D2;
+    --theme-surface: #FAF7F0;
+    --theme-primary: #3F4A2D;
+    --theme-primary-hover: #2E3526;
+    --theme-secondary: #66724A;
+    --theme-accent: #9A7B5D;
+    --theme-text: #242A20;
+    --theme-text-muted: #586150;
+    --theme-border: #C9B99C;
+    --theme-header: rgba(232, 224, 210, 0.95);
+    --theme-footer: #2E3526;
+  }
+
+  html,
   body {
-    background-color: #FAF7F2;
-    color: #1E2421;
+    background-color: var(--color-cream-100, #F5EFE4);
+    color: var(--color-charcoal-900, #2E241E);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.25s ease, color 0.25s ease;
   }
 
   h1, h2, h3, h4, .font-serif {
@@ -28,16 +278,16 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #FAF7F2;
+  background: var(--color-cream-100, #F5EFE4);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #D3DBD3;
+  background: var(--color-sand-200, #D8C3A5);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #8EA893;
+  background: var(--color-sage-400, #66724A);
 }
 
 @keyframes fadeIn {

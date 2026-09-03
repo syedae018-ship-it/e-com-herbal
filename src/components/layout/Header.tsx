@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
+import { useWebsiteContent } from '@/context/ContentContext';
+import Image from 'next/image';
 import {
   ShoppingBag,
   User,
@@ -29,6 +31,7 @@ export const Header: React.FC = () => {
   const router = useRouter();
   const { itemCount, setIsCartOpen } = useCart();
   const { user, profile, isAdmin, signOut } = useAuth();
+  const { content } = useWebsiteContent();
 
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -92,18 +95,30 @@ export const Header: React.FC = () => {
 
             {/* Brand Logo */}
             <Link href="/" className="flex items-center gap-2.5 group">
-              <div className="w-9 h-9 rounded-full bg-forest-900 flex items-center justify-center text-cream-100 shadow-sm group-hover:bg-forest-800 transition-colors">
-                <Leaf className="w-5 h-5 text-sage-300" />
-              </div>
+              {content.settings.logo_url ? (
+                <div className="relative w-9 h-9 rounded-full overflow-hidden shrink-0 border border-sand-300">
+                  <Image
+                    src={content.settings.logo_url}
+                    alt={content.settings.site_name}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              ) : (
+                <div className="w-9 h-9 rounded-full bg-forest-900 flex items-center justify-center text-cream-100 shadow-sm group-hover:bg-forest-800 transition-colors">
+                  <Leaf className="w-5 h-5 text-sage-300" />
+                </div>
+              )}
               <div className="flex flex-col">
                 <span className="font-serif text-xl sm:text-2xl font-bold tracking-tight text-forest-950 leading-none">
-                  HERBAL E COM LIFE
+                  {content.settings.site_name || 'HERBAL E COM LIFE'}
                 </span>
                 <span className="text-[10px] tracking-widest uppercase font-semibold text-sage-500 mt-1">
-                  Naturally Better. Everyday.
+                  {content.settings.site_tagline || 'Naturally Better. Everyday.'}
                 </span>
               </div>
             </Link>
+
 
             {/* Desktop Navigation Links */}
             <nav className="hidden lg:flex items-center space-x-7">

@@ -236,6 +236,7 @@ export const DEFAULT_WEBSITE_CONTENT: WebsiteContent = {
   settings: {
     site_name: 'MUSTAFA LIFE',
     site_tagline: 'Naturally Better. Everyday.',
+    active_theme: 'herbal-beige-brown',
     logo_url: '',
     hero_tagline: 'Pure Wellness, Powered by Nature',
     promotional_tagline: 'Ayurvedic Heritage with Modern Purity',

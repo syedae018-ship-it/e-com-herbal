@@ -1,29 +1,42 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Category } from '@/lib/types';
 import { ArrowRight } from 'lucide-react';
+import { useWebsiteContent } from '@/context/ContentContext';
 
 interface CategoryCardsProps {
   categories: Category[];
 }
 
 export const CategoryCards: React.FC<CategoryCardsProps> = ({ categories }) => {
+  const { content } = useWebsiteContent();
+  const section = content.categories_section;
+
+  if (section.is_enabled === false) {
+    return null;
+  }
+
   return (
     <section id="categories" className="py-16 sm:py-20 bg-cream-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto space-y-2">
-          <span className="text-xs uppercase font-bold tracking-widest text-sage-600">
-            Curated Collections
-          </span>
+          {section.badge_text && (
+            <span className="text-xs uppercase font-bold tracking-widest text-sage-600">
+              {section.badge_text}
+            </span>
+          )}
           <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-forest-950">
-            Shop by Category
+            {section.heading}
           </h2>
           <p className="text-xs sm:text-sm text-charcoal-600">
-            Explore pure, plant-powered solutions tailored for every aspect of your daily wellness ritual.
+            {section.subtitle}
           </p>
         </div>
+
 
         {/* Category Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5 sm:gap-6">

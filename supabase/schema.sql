@@ -434,3 +434,26 @@ CREATE POLICY "Admins Upload Product Images"
 CREATE POLICY "Admins Delete Product Images"
     ON storage.objects FOR DELETE
     USING (bucket_id = 'product-images' AND public.is_admin());
+
+-- ==============================================================================
+-- 8. WEBSITE CONTENT & CMS CONFIGURATION
+-- ==============================================================================
+
+CREATE TABLE IF NOT EXISTS public.website_content (
+    key TEXT PRIMARY KEY,
+    value JSONB NOT NULL DEFAULT '{}'::jsonb,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+ALTER TABLE public.website_content ENABLE ROW LEVEL SECURITY;
+
+-- Public can view website content
+CREATE POLICY "Public Read Website Content"
+    ON public.website_content FOR SELECT
+    USING (true);
+
+-- Admins can manage website content
+CREATE POLICY "Admins Manage Website Content"
+    ON public.website_content FOR ALL
+    USING (public.is_admin());
+

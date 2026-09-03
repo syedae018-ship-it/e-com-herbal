@@ -109,6 +109,92 @@ export default function AdminDashboardPage() {
         />
       </div>
 
+      {/* Website Customization Shortcuts */}
+      <div className="bg-gradient-to-r from-forest-950 via-forest-900 to-forest-950 text-cream-100 rounded-2xl p-6 shadow-md border border-forest-800 space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div>
+            <span className="text-[10px] font-bold uppercase tracking-widest text-sage-300">
+              Live Website Control System
+            </span>
+            <h3 className="font-serif text-lg font-bold text-white">
+              Website Content & CMS Customization
+            </h3>
+          </div>
+          <Link
+            href="/admin/homepage"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-sage-300 hover:text-white bg-forest-800 hover:bg-forest-700 px-3.5 py-2 rounded-xl transition-colors self-start sm:self-auto"
+          >
+            <span>Open Homepage Editor</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3 pt-1">
+          <Link
+            href="/admin/themes"
+            className="bg-forest-900/80 hover:bg-forest-800 p-3.5 rounded-xl border border-forest-700/60 transition-all text-center group"
+          >
+            <span className="block text-xl mb-1">🎨</span>
+            <span className="block text-xs font-bold text-white group-hover:text-sage-300">Themes</span>
+            <span className="block text-[10px] text-sage-400">4 Palettes</span>
+          </Link>
+
+          <Link
+            href="/admin/homepage"
+            className="bg-forest-900/80 hover:bg-forest-800 p-3.5 rounded-xl border border-forest-700/60 transition-all text-center group"
+          >
+            <span className="block text-xl mb-1">🏠</span>
+            <span className="block text-xs font-bold text-white group-hover:text-sage-300">Homepage</span>
+            <span className="block text-[10px] text-sage-400">9 Sections</span>
+          </Link>
+
+          <Link
+            href="/admin/taglines"
+            className="bg-forest-900/80 hover:bg-forest-800 p-3.5 rounded-xl border border-forest-700/60 transition-all text-center group"
+          >
+            <span className="block text-xl mb-1">💬</span>
+            <span className="block text-xs font-bold text-white group-hover:text-sage-300">Taglines</span>
+            <span className="block text-[10px] text-sage-400">Slogans & Bar</span>
+          </Link>
+
+          <Link
+            href="/admin/images"
+            className="bg-forest-900/80 hover:bg-forest-800 p-3.5 rounded-xl border border-forest-700/60 transition-all text-center group"
+          >
+            <span className="block text-xl mb-1">🖼️</span>
+            <span className="block text-xs font-bold text-white group-hover:text-sage-300">Image Gallery</span>
+            <span className="block text-[10px] text-sage-400">Visual Assets</span>
+          </Link>
+
+          <Link
+            href="/admin/categories"
+            className="bg-forest-900/80 hover:bg-forest-800 p-3.5 rounded-xl border border-forest-700/60 transition-all text-center group"
+          >
+            <span className="block text-xl mb-1">🌿</span>
+            <span className="block text-xs font-bold text-white group-hover:text-sage-300">Categories</span>
+            <span className="block text-[10px] text-sage-400">Collections</span>
+          </Link>
+
+          <Link
+            href="/admin/testimonials"
+            className="bg-forest-900/80 hover:bg-forest-800 p-3.5 rounded-xl border border-forest-700/60 transition-all text-center group"
+          >
+            <span className="block text-xl mb-1">⭐</span>
+            <span className="block text-xs font-bold text-white group-hover:text-sage-300">Testimonials</span>
+            <span className="block text-[10px] text-sage-400">5-Star Reviews</span>
+          </Link>
+
+          <Link
+            href="/admin/settings"
+            className="bg-forest-900/80 hover:bg-forest-800 p-3.5 rounded-xl border border-forest-700/60 transition-all text-center group"
+          >
+            <span className="block text-xl mb-1">⚙️</span>
+            <span className="block text-xs font-bold text-white group-hover:text-sage-300">Settings</span>
+            <span className="block text-[10px] text-sage-400">Store Config</span>
+          </Link>
+        </div>
+      </div>
+
       {/* 6. Operational Stock Health Section */}
       <div className="bg-white rounded-xl border border-zinc-200/80 p-5 shadow-[0_1px_3px_rgba(0,0,0,0.04)] space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-zinc-100">

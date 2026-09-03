@@ -44,7 +44,31 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${poppins.variable} scroll-smooth`}>
+    <html lang="en" className={`${inter.variable} ${poppins.variable} scroll-smooth`} suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var theme = localStorage.getItem('mustafa_life_active_theme');
+                  if (theme) {
+                    document.documentElement.setAttribute('data-theme', theme);
+                  } else {
+                    var cms = localStorage.getItem('mustafa_life_cms_content_v1');
+                    if (cms) {
+                      var parsed = JSON.parse(cms);
+                      if (parsed && parsed.settings && parsed.settings.active_theme) {
+                        document.documentElement.setAttribute('data-theme', parsed.settings.active_theme);
+                      }
+                    }
+                  }
+                } catch (e) {}
+              })();
+            `,
+          }}
+        />
+      </head>
       <body className="min-h-screen flex flex-col bg-cream-100 text-charcoal-900 font-sans selection:bg-sage-200 selection:text-forest-950">
         <AuthProvider>
           <ContentProvider>
@@ -61,3 +85,4 @@ export default function RootLayout({
     </html>
   );
 }
+

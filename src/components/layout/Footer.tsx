@@ -3,71 +3,122 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Leaf, ShieldCheck, Heart, Sparkles, Instagram, Facebook, Twitter, Youtube, ArrowRight } from 'lucide-react';
+import Image from 'next/image';
+import {
+  Leaf,
+  ShieldCheck,
+  Heart,
+  Sparkles,
+  Instagram,
+  Facebook,
+  Twitter,
+  Youtube,
+  ArrowRight,
+} from 'lucide-react';
+import { useWebsiteContent } from '@/context/ContentContext';
 
 export const Footer: React.FC = () => {
   const pathname = usePathname();
+  const { content } = useWebsiteContent();
+  const footer = content.footer;
+  const settings = content.settings;
 
-  if (pathname?.startsWith('/admin')) {
+  if (pathname?.startsWith('/admin') || footer.is_enabled === false) {
     return null;
   }
+
   return (
     <footer className="bg-forest-950 text-cream-100 border-t border-forest-900 mt-20">
       {/* Brand Trust Strip */}
-      <div className="border-b border-forest-900/60 bg-forest-900/40 py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            <div className="flex flex-col items-center space-y-1">
-              <Leaf className="w-6 h-6 text-sage-400" />
-              <span className="font-semibold text-xs tracking-wide text-white uppercase mt-1">100% Organic</span>
-              <span className="text-[11px] text-sage-300">Pure bioactive botanical extracts</span>
-            </div>
-            <div className="flex flex-col items-center space-y-1">
-              <ShieldCheck className="w-6 h-6 text-sage-400" />
-              <span className="font-semibold text-xs tracking-wide text-white uppercase mt-1">Lab Tested</span>
-              <span className="text-[11px] text-sage-300">Zero toxins, heavy metals or fillers</span>
-            </div>
-            <div className="flex flex-col items-center space-y-1">
-              <Heart className="w-6 h-6 text-sage-400" />
-              <span className="font-semibold text-xs tracking-wide text-white uppercase mt-1">Cruelty-Free</span>
-              <span className="text-[11px] text-sage-300">100% Vegan & ethically sourced</span>
-            </div>
-            <div className="flex flex-col items-center space-y-1">
-              <Sparkles className="w-6 h-6 text-sage-400" />
-              <span className="font-semibold text-xs tracking-wide text-white uppercase mt-1">Free Shipping</span>
-              <span className="text-[11px] text-sage-300">On all prepaid & COD above ₹499</span>
+      {footer.trust_badges && footer.trust_badges.length > 0 && (
+        <div className="border-b border-forest-900/60 bg-forest-900/40 py-8">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+              {footer.trust_badges.map((badge, idx) => (
+                <div key={idx} className="flex flex-col items-center space-y-1">
+                  {idx === 0 && <Leaf className="w-6 h-6 text-sage-400" />}
+                  {idx === 1 && <ShieldCheck className="w-6 h-6 text-sage-400" />}
+                  {idx === 2 && <Heart className="w-6 h-6 text-sage-400" />}
+                  {idx === 3 && <Sparkles className="w-6 h-6 text-sage-400" />}
+                  <span className="font-semibold text-xs tracking-wide text-white uppercase mt-1">
+                    {badge.title}
+                  </span>
+                  <span className="text-[11px] text-sage-300">{badge.description}</span>
+                </div>
+              ))}
             </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* Main Footer Links */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-10">
           {/* Brand Info */}
           <div className="lg:col-span-2 space-y-4">
-            <Link href="/" className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-full bg-sage-400 flex items-center justify-center text-forest-950 font-bold">
-                <Leaf className="w-4 h-4" />
-              </div>
-              <span className="font-serif text-xl font-bold tracking-tight text-white">HERBAL E COM LIFE</span>
+            <Link href="/" className="flex items-center gap-2.5">
+              {settings.logo_url ? (
+                <div className="relative w-8 h-8 rounded-full overflow-hidden shrink-0 border border-sage-400">
+                  <Image src={settings.logo_url} alt={settings.site_name || 'HERBAL E COM LIFE'} fill className="object-cover" />
+                </div>
+              ) : (
+                <div className="w-8 h-8 rounded-full bg-sage-400 flex items-center justify-center text-forest-950 font-bold">
+                  <Leaf className="w-4 h-4" />
+                </div>
+              )}
+              <span className="font-serif text-xl font-bold tracking-tight text-white">
+                {settings.site_name || 'HERBAL E COM LIFE'}
+              </span>
             </Link>
             <p className="text-xs text-sage-200/80 leading-relaxed max-w-sm">
-              Naturally Better. Everyday. We formulate clean, honest, and high-potency herbal remedies and nutrition designed to elevate daily health, skin vitality, and hair wellness.
+              {footer.about_text ||
+                'Naturally Better. Everyday. We formulate clean, honest, and high-potency herbal remedies and nutrition.'}
             </p>
             <div className="flex items-center space-x-3 pt-2">
-              <a href="#" className="w-8 h-8 rounded-full bg-forest-900 hover:bg-forest-800 text-sage-300 hover:text-white flex items-center justify-center transition-colors">
-                <Instagram className="w-4 h-4" />
-              </a>
-              <a href="#" className="w-8 h-8 rounded-full bg-forest-900 hover:bg-forest-800 text-sage-300 hover:text-white flex items-center justify-center transition-colors">
-                <Facebook className="w-4 h-4" />
-              </a>
-              <a href="#" className="w-8 h-8 rounded-full bg-forest-900 hover:bg-forest-800 text-sage-300 hover:text-white flex items-center justify-center transition-colors">
-                <Twitter className="w-4 h-4" />
-              </a>
-              <a href="#" className="w-8 h-8 rounded-full bg-forest-900 hover:bg-forest-800 text-sage-300 hover:text-white flex items-center justify-center transition-colors">
-                <Youtube className="w-4 h-4" />
-              </a>
+              {footer.instagram_url && (
+                <a
+                  href={footer.instagram_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Instagram"
+                  className="w-8 h-8 rounded-full bg-forest-900 hover:bg-forest-800 text-sage-300 hover:text-white flex items-center justify-center transition-colors"
+                >
+                  <Instagram className="w-4 h-4" />
+                </a>
+              )}
+              {footer.facebook_url && (
+                <a
+                  href={footer.facebook_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Facebook"
+                  className="w-8 h-8 rounded-full bg-forest-900 hover:bg-forest-800 text-sage-300 hover:text-white flex items-center justify-center transition-colors"
+                >
+                  <Facebook className="w-4 h-4" />
+                </a>
+              )}
+              {footer.twitter_url && (
+                <a
+                  href={footer.twitter_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Twitter"
+                  className="w-8 h-8 rounded-full bg-forest-900 hover:bg-forest-800 text-sage-300 hover:text-white flex items-center justify-center transition-colors"
+                >
+                  <Twitter className="w-4 h-4" />
+                </a>
+              )}
+              {footer.youtube_url && (
+                <a
+                  href={footer.youtube_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="YouTube"
+                  className="w-8 h-8 rounded-full bg-forest-900 hover:bg-forest-800 text-sage-300 hover:text-white flex items-center justify-center transition-colors"
+                >
+                  <Youtube className="w-4 h-4" />
+                </a>
+              )}
             </div>
           </div>
 
@@ -138,7 +189,9 @@ export const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
-                <span className="text-[11px] text-sage-400">care@herbalecomlife.com</span>
+                <span className="text-[11px] text-sage-400 font-mono">
+                  {footer.care_email || settings.contact_email || 'care@herbalecomlife.com'}
+                </span>
               </li>
             </ul>
           </div>
@@ -204,7 +257,10 @@ export const Footer: React.FC = () => {
 
         {/* Bottom Bar */}
         <div className="border-t border-forest-900/80 mt-12 pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-sage-400 gap-4">
-          <p>© {new Date().getFullYear()} HERBAL E COM LIFE India. All rights reserved. Naturally Better. Everyday.</p>
+          <p>
+            © {new Date().getFullYear()}{' '}
+            {footer.copyright_text || 'HERBAL E COM LIFE India. All rights reserved. Naturally Better. Everyday.'}
+          </p>
           <div className="flex items-center space-x-6 text-[11px]">
             <Link href="/shop" className="hover:text-white transition-colors">
               Privacy Policy
@@ -221,3 +277,4 @@ export const Footer: React.FC = () => {
     </footer>
   );
 };
+
