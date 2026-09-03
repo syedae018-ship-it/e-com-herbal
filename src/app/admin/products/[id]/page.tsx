@@ -7,7 +7,7 @@ import { getAllProductsAdmin, updateProduct } from '@/lib/db/products';
 import { getCategories } from '@/lib/db/categories';
 import { Product, Category } from '@/lib/types';
 import { ProductForm } from '@/components/admin/ProductForm';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Package } from 'lucide-react';
 
 export default function EditProductPage() {
   const params = useParams();
@@ -36,36 +36,38 @@ export default function EditProductPage() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 font-admin-body">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between pb-2 border-b border-zinc-200/60">
         <div>
-          <span className="text-xs uppercase font-bold tracking-widest text-sage-600">
-            Catalog Management
-          </span>
-          <h1 className="font-serif text-2xl sm:text-3xl font-bold text-forest-950">
+          <h1 className="font-admin-heading text-2xl sm:text-3xl font-semibold tracking-tight text-zinc-950">
             Edit Product
           </h1>
+          <p className="text-xs sm:text-sm text-zinc-500 mt-1">
+            Update specifications, pricing, inventory stock, and gallery imagery.
+          </p>
         </div>
 
         <Link
           href="/admin/products"
-          className="inline-flex items-center gap-1 text-xs font-semibold text-forest-800 hover:text-forest-950"
+          className="inline-flex items-center gap-1.5 text-xs font-medium text-zinc-600 hover:text-zinc-950 px-3 py-1.5 rounded-lg border border-zinc-200 hover:bg-zinc-50 transition-colors"
         >
-          <ArrowLeft className="w-3.5 h-3.5" /> Back to Products
+          <ArrowLeft className="w-3.5 h-3.5" />
+          <span>Back to Products</span>
         </Link>
       </div>
 
       {loading ? (
-        <div className="py-12 text-center text-xs text-charcoal-500">Loading product...</div>
+        <div className="py-16 text-center text-xs text-zinc-400">Loading product details...</div>
       ) : !product ? (
-        <div className="bg-white p-8 rounded-2xl border border-sand-200 text-center space-y-3">
-          <p className="text-xs text-charcoal-600">Product not found.</p>
+        <div className="bg-white p-8 rounded-xl border border-zinc-200/80 text-center space-y-3">
+          <Package className="w-8 h-8 text-zinc-300 mx-auto" />
+          <p className="text-xs text-zinc-600 font-medium">Product record not found.</p>
           <button
             onClick={() => router.push('/admin/products')}
-            className="text-xs font-bold text-forest-900 underline"
+            className="text-xs font-medium text-forest-900 hover:underline"
           >
-            Return to Products List
+            Return to Products Catalog
           </button>
         </div>
       ) : (

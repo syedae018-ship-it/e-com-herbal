@@ -467,7 +467,7 @@ export default function CheckoutPage() {
             <div className="p-4 rounded-2xl bg-sage-50/70 border border-sage-100 space-y-2 text-xs text-forest-950">
               <div className="flex items-center gap-2 font-bold">
                 <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" />
-                <span>Mustafa Life Pure Quality Guarantee</span>
+                <span>Herbal E Com Life Pure Quality Guarantee</span>
               </div>
               <p className="text-[11px] text-charcoal-600 leading-relaxed">
                 All botanical batches are 100% natural, tested for purity, and safely packed in eco-friendly packaging.

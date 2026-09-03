@@ -19,19 +19,21 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
 }) => {
   if (isLoading) {
     return (
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-3 sm:gap-4 xl:gap-5">
         {[...Array(8)].map((_, i) => (
           <div
             key={i}
-            className="bg-white rounded-2xl border border-sand-200 p-4 space-y-4 animate-pulse"
+            className="bg-white rounded-xl border border-zinc-200/80 p-3 space-y-3 animate-pulse h-[310px] flex flex-col justify-between"
           >
-            <div className="aspect-square bg-sand-100 rounded-xl w-full" />
-            <div className="h-3 bg-sand-100 rounded w-1/3" />
-            <div className="h-4 bg-sand-200 rounded w-3/4" />
-            <div className="h-3 bg-sand-100 rounded w-full" />
-            <div className="flex justify-between items-center pt-2">
-              <div className="h-5 bg-sand-200 rounded w-16" />
-              <div className="h-8 bg-sand-200 rounded w-20" />
+            <div className="aspect-[16/10.5] bg-zinc-100 rounded-lg w-full" />
+            <div className="space-y-2">
+              <div className="h-2.5 bg-zinc-100 rounded w-1/4" />
+              <div className="h-3.5 bg-zinc-200 rounded w-3/4" />
+              <div className="h-2.5 bg-zinc-100 rounded w-full" />
+            </div>
+            <div className="flex justify-between items-center pt-2 border-t border-zinc-100">
+              <div className="h-4 bg-zinc-200 rounded w-16" />
+              <div className="h-7 bg-zinc-200 rounded w-14" />
             </div>
           </div>
         ))}
@@ -41,24 +43,24 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
 
   if (products.length === 0) {
     return (
-      <div className="bg-white rounded-2xl border border-sand-200 p-12 text-center max-w-lg mx-auto space-y-4 shadow-sm">
-        <div className="w-16 h-16 rounded-full bg-sage-50 text-forest-800 mx-auto flex items-center justify-center">
-          <Leaf className="w-8 h-8 text-forest-700" />
+      <div className="bg-white rounded-xl border border-zinc-200/80 p-10 text-center max-w-md mx-auto space-y-3 shadow-xs font-admin-body">
+        <div className="w-12 h-12 rounded-full bg-forest-50 text-forest-800 mx-auto flex items-center justify-center">
+          <Leaf className="w-6 h-6 text-forest-700" />
         </div>
-        <h3 className="font-serif text-lg font-bold text-forest-950">{emptyTitle}</h3>
-        <p className="text-xs text-charcoal-600 leading-relaxed">{emptyMessage}</p>
+        <h3 className="font-admin-heading text-base font-semibold text-zinc-950">{emptyTitle}</h3>
+        <p className="text-xs text-zinc-500 leading-relaxed">{emptyMessage}</p>
         <Link
           href="/shop"
-          className="inline-block mt-2 bg-forest-900 text-cream-50 text-xs font-semibold px-5 py-2.5 rounded-lg hover:bg-forest-800 transition-colors"
+          className="inline-block mt-2 bg-forest-900 text-white text-xs font-medium px-4 py-2 rounded-lg hover:bg-forest-800 transition-colors shadow-xs"
         >
-          View All Products
+          Reset All Filters
         </Link>
       </div>
     );
   }
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+    <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-3 sm:gap-4 xl:gap-5 items-stretch">
       {products.map((product) => (
         <ProductCard key={product.id} product={product} />
       ))}

@@ -1,4 +1,4 @@
-// MUSTAFA LIFE - DOMAIN TYPE DEFINITIONS (PHASE 2)
+// HERBAL E COM LIFE - DOMAIN TYPE DEFINITIONS (PHASE 2)
 
 export type UserRole = 'customer' | 'admin';
 

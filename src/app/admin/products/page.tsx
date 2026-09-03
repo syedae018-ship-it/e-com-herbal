@@ -8,15 +8,16 @@ import { getCategories } from '@/lib/db/categories';
 import { Product, Category } from '@/lib/types';
 import { formatINR } from '@/lib/utils';
 import {
-  PlusCircle,
+  Plus,
   Search,
   Edit2,
   Trash2,
   Package,
   Eye,
   EyeOff,
-  Star,
   CheckCircle2,
+  AlertCircle,
+  Sparkles,
 } from 'lucide-react';
 
 export default function AdminProductsPage() {
@@ -40,11 +41,12 @@ export default function AdminProductsPage() {
   }, []);
 
   const handleDelete = async (id: string, name: string) => {
-    if (confirm(`Are you sure you want to delete "${name}"?`)) {
+    if (confirm(`Are you sure you want to delete "${name}"? This action cannot be undone.`)) {
       const res = await deleteProduct(id);
       if (res.success) {
         setStatusMessage(`Product "${name}" deleted.`);
         loadData();
+        setTimeout(() => setStatusMessage(''), 3000);
       }
     }
   };
@@ -65,187 +67,210 @@ export default function AdminProductsPage() {
   });
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 font-admin-body">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-zinc-200/60">
         <div>
-          <span className="text-xs uppercase font-bold tracking-widest text-sage-600">
-            Catalog Management
-          </span>
-          <h1 className="font-serif text-2xl sm:text-3xl font-bold text-forest-950">
-            Products ({products.length})
+          <h1 className="font-admin-heading text-2xl sm:text-3xl font-semibold tracking-tight text-zinc-950">
+            Products
           </h1>
+          <p className="text-xs sm:text-sm text-zinc-500 mt-1">
+            Manage your store catalog, pricing, inventory stock, and visibility.
+          </p>
         </div>
 
         <Link
           href="/admin/products/new"
-          className="inline-flex items-center gap-2 bg-forest-900 text-cream-50 hover:bg-forest-800 font-bold px-4 py-2.5 rounded-xl text-xs shadow-sm transition-colors self-start sm:self-auto"
+          className="inline-flex items-center gap-1.5 bg-forest-900 text-white hover:bg-forest-800 font-medium px-3.5 py-2 rounded-lg text-xs transition-colors shadow-sm self-start sm:self-auto"
         >
-          <PlusCircle className="w-4 h-4" />
-          <span>Add New Product</span>
+          <Plus className="w-3.5 h-3.5" />
+          <span>Add Product</span>
         </Link>
       </div>
 
       {statusMessage && (
-        <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 flex items-center gap-2">
-          <CheckCircle2 className="w-4 h-4 shrink-0" />
+        <div className="p-3 rounded-lg bg-emerald-50 border border-emerald-200/80 text-xs text-emerald-800 flex items-center gap-2">
+          <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-600" />
           <span>{statusMessage}</span>
         </div>
       )}
 
       {/* Filters Bar */}
-      <div className="bg-white p-4 rounded-2xl border border-sand-200 shadow-sm flex flex-col sm:flex-row gap-3 items-center justify-between">
+      <div className="bg-white p-3 sm:p-4 rounded-xl border border-zinc-200/80 shadow-[0_1px_3px_rgba(0,0,0,0.04)] flex flex-col sm:flex-row gap-3 items-center justify-between">
         <div className="relative w-full sm:max-w-xs">
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search products by name..."
-            className="w-full bg-sand-50/70 border border-sand-300 rounded-xl px-3 py-2 pl-9 text-xs text-charcoal-900 focus:outline-none focus:ring-2 focus:ring-forest-700"
+            placeholder="Search products by title..."
+            className="w-full bg-zinc-50/70 border border-zinc-200 rounded-lg px-3 py-2 pl-8 text-xs text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-1 focus:ring-forest-800 focus:border-forest-800 transition-colors"
           />
-          <Search className="w-3.5 h-3.5 text-charcoal-400 absolute left-3 top-2.5" />
+          <Search className="w-3.5 h-3.5 text-zinc-400 absolute left-2.5 top-2.5" />
         </div>
 
-        <div className="w-full sm:w-auto">
+        <div className="w-full sm:w-auto flex items-center gap-2">
           <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
-            className="w-full sm:w-auto bg-sand-50/70 border border-sand-300 rounded-xl px-3 py-2 text-xs text-charcoal-900 focus:outline-none focus:ring-2 focus:ring-forest-700"
+            className="w-full sm:w-auto bg-zinc-50/70 border border-zinc-200 rounded-lg px-3 py-2 text-xs text-zinc-800 focus:outline-none focus:ring-1 focus:ring-forest-800 focus:border-forest-800 transition-colors"
           >
-            <option value="">All Categories</option>
+            <option value="">All Categories ({categories.length})</option>
             {categories.map((c) => (
               <option key={c.id} value={c.id}>
                 {c.name}
               </option>
             ))}
           </select>
+          <span className="text-xs text-zinc-400 whitespace-nowrap hidden sm:inline">
+            {filteredProducts.length} result{filteredProducts.length === 1 ? '' : 's'}
+          </span>
         </div>
       </div>
 
-      {/* Table */}
-      <div className="bg-white rounded-2xl border border-sand-200 shadow-sm overflow-hidden">
+      {/* Products Table */}
+      <div className="bg-white rounded-xl border border-zinc-200/80 shadow-[0_1px_3px_rgba(0,0,0,0.04)] overflow-hidden">
         {loading ? (
-          <div className="py-12 text-center text-xs text-charcoal-500">Loading catalog...</div>
+          <div className="py-16 text-center text-xs text-zinc-400">Loading catalog...</div>
         ) : filteredProducts.length === 0 ? (
-          <div className="py-12 text-center space-y-2">
-            <Package className="w-8 h-8 text-charcoal-400 mx-auto" />
-            <p className="text-xs text-charcoal-600">No products found matching your filter.</p>
+          <div className="py-16 text-center space-y-2">
+            <Package className="w-8 h-8 text-zinc-300 mx-auto" />
+            <p className="text-xs text-zinc-600 font-medium">No products match your criteria</p>
+            <p className="text-[11px] text-zinc-400">Try adjusting your search query or category filter</p>
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
               <thead>
-                <tr className="bg-sand-50/70 border-b border-sand-200 text-charcoal-500 uppercase tracking-wider font-bold text-[10px]">
-                  <th className="py-3.5 px-4 font-bold">Product</th>
-                  <th className="py-3.5 px-4 font-bold">Category</th>
-                  <th className="py-3.5 px-4 font-bold">Price</th>
-                  <th className="py-3.5 px-4 font-bold">Stock</th>
-                  <th className="py-3.5 px-4 font-bold">Featured</th>
-                  <th className="py-3.5 px-4 font-bold">Status</th>
-                  <th className="py-3.5 px-4 font-bold text-right">Actions</th>
+                <tr className="border-b border-zinc-100 text-zinc-400 uppercase tracking-wider font-semibold text-[10px] bg-zinc-50/50">
+                  <th className="py-3 px-5 font-semibold">Product</th>
+                  <th className="py-3 px-4 font-semibold">Category</th>
+                  <th className="py-3 px-4 font-semibold">Price</th>
+                  <th className="py-3 px-4 font-semibold">Stock</th>
+                  <th className="py-3 px-4 font-semibold">Status</th>
+                  <th className="py-3 px-5 font-semibold text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-sand-100">
-                {filteredProducts.map((p) => {
-                  const img =
-                    p.images?.[0] ||
-                    'https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=100&q=80';
-                  const catName =
-                    categories.find((c) => c.id === p.category_id)?.name ||
-                    p.category?.name ||
-                    'General';
+              <tbody className="divide-y divide-zinc-100 font-admin-body">
+                {filteredProducts.map((product) => {
+                  const stockCount = product.stock ?? 0;
+                  const isOut = stockCount <= 0;
+                  const isLow = stockCount > 0 && stockCount <= 15;
 
                   return (
-                    <tr key={p.id} className="hover:bg-sand-50/50 transition-colors">
-                      <td className="py-3 px-4">
+                    <tr key={product.id} className="hover:bg-zinc-50/60 transition-colors">
+                      {/* Product Thumbnail & Title */}
+                      <td className="py-3.5 px-5">
                         <div className="flex items-center gap-3">
-                          <div className="relative w-10 h-10 rounded-lg overflow-hidden bg-sand-100 shrink-0 border border-sand-200">
-                            <Image src={img} alt={p.name} fill className="object-cover" sizes="40px" />
+                          <div className="w-10 h-10 rounded-lg bg-zinc-100 border border-zinc-200 overflow-hidden relative shrink-0">
+                            {product.images && product.images[0] ? (
+                              <Image
+                                src={product.images[0]}
+                                alt={product.name}
+                                fill
+                                className="object-cover"
+                                sizes="40px"
+                              />
+                            ) : (
+                              <div className="w-full h-full flex items-center justify-center text-zinc-400">
+                                <Package className="w-4 h-4" />
+                              </div>
+                            )}
                           </div>
-                          <div>
-                            <Link
-                              href={`/product/${p.slug}`}
-                              target="_blank"
-                              className="font-bold text-forest-950 hover:underline line-clamp-1"
-                            >
-                              {p.name}
-                            </Link>
-                            <span className="text-[10px] text-charcoal-400 font-mono">/{p.slug}</span>
+                          <div className="min-w-0 max-w-[240px]">
+                            <p className="font-medium text-zinc-900 truncate">
+                              {product.name}
+                            </p>
+                            <p className="text-[11px] text-zinc-400 truncate">
+                              {product.short_description}
+                            </p>
                           </div>
                         </div>
                       </td>
 
-                      <td className="py-3 px-4 text-charcoal-700 font-medium">{catName}</td>
-
-                      <td className="py-3 px-4">
-                        <span className="font-bold text-forest-900 font-sans">{formatINR(p.price)}</span>
-                        {p.original_price && p.original_price > p.price && (
-                          <span className="block text-[10px] text-charcoal-400 line-through">
-                            {formatINR(p.original_price)}
-                          </span>
-                        )}
-                      </td>
-
-                      <td className="py-3 px-4">
-                        <span
-                          className={`font-semibold ${
-                            p.stock <= 0
-                              ? 'text-rose-600'
-                              : p.stock < 10
-                              ? 'text-amber-600'
-                              : 'text-charcoal-800'
-                          }`}
-                        >
-                          {p.stock} units
+                      {/* Category */}
+                      <td className="py-3.5 px-4 text-zinc-600">
+                        <span className="text-[11px] text-zinc-600 bg-zinc-100 px-2 py-0.5 rounded border border-zinc-200/60">
+                          {product.category?.name || 'Ayurvedic'}
                         </span>
                       </td>
 
-                      <td className="py-3 px-4">
-                        {p.featured ? (
-                          <span className="inline-flex items-center gap-1 text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full text-[10px] font-bold">
-                            <Star className="w-3 h-3 fill-amber-400 text-amber-400" /> Bestseller
+                      {/* Price */}
+                      <td className="py-3.5 px-4">
+                        <span className="font-admin-heading font-medium text-zinc-950 tabular-nums">
+                          {formatINR(product.price)}
+                        </span>
+                        {product.original_price && product.original_price > product.price && (
+                          <span className="block text-[10px] text-zinc-400 line-through tabular-nums">
+                            {formatINR(product.original_price)}
                           </span>
-                        ) : (
-                          <span className="text-charcoal-400 text-[11px]">—</span>
                         )}
                       </td>
 
-                      <td className="py-3 px-4">
-                        <button
-                          onClick={() => handleToggleActive(p)}
-                          className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold transition-colors ${
-                            p.is_active
-                              ? 'bg-emerald-100 text-emerald-800 hover:bg-emerald-200'
-                              : 'bg-charcoal-100 text-charcoal-600 hover:bg-charcoal-200'
+                      {/* Stock Level with Semantic Dot */}
+                      <td className="py-3.5 px-4">
+                        <span
+                          className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[11px] font-medium border ${
+                            isOut
+                              ? 'bg-rose-50 text-rose-800 border-rose-200/80'
+                              : isLow
+                              ? 'bg-amber-50 text-amber-800 border-amber-200/80'
+                              : 'bg-emerald-50 text-emerald-800 border-emerald-200/80'
                           }`}
                         >
-                          {p.is_active ? (
+                          <span
+                            className={`w-1.5 h-1.5 rounded-full ${
+                              isOut ? 'bg-rose-500' : isLow ? 'bg-amber-500' : 'bg-emerald-500'
+                            }`}
+                          />
+                          <span>
+                            {isOut ? 'Out of stock' : `${stockCount} units`}
+                          </span>
+                        </span>
+                      </td>
+
+                      {/* Active / Hidden Toggle */}
+                      <td className="py-3.5 px-4">
+                        <button
+                          onClick={() => handleToggleActive(product)}
+                          className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[11px] font-medium transition-colors ${
+                            product.is_active
+                              ? 'bg-zinc-100 text-zinc-700 hover:bg-zinc-200/70'
+                              : 'bg-zinc-100 text-zinc-400 line-through'
+                          }`}
+                          title="Click to toggle visibility"
+                        >
+                          {product.is_active ? (
                             <>
-                              <Eye className="w-3 h-3 text-emerald-700" /> Active
+                              <Eye className="w-3 h-3 text-zinc-600" />
+                              <span>Active</span>
                             </>
                           ) : (
                             <>
-                              <EyeOff className="w-3 h-3" /> Inactive
+                              <EyeOff className="w-3 h-3 text-zinc-400" />
+                              <span>Hidden</span>
                             </>
                           )}
                         </button>
                       </td>
 
-                      <td className="py-3 px-4 text-right space-x-2">
-                        <Link
-                          href={`/admin/products/${p.id}`}
-                          className="inline-block p-1.5 text-forest-800 hover:text-forest-950 hover:bg-sand-100 rounded-lg transition-colors"
-                          title="Edit product"
-                        >
-                          <Edit2 className="w-4 h-4" />
-                        </Link>
-                        <button
-                          onClick={() => handleDelete(p.id, p.name)}
-                          className="p-1.5 text-charcoal-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors"
-                          title="Delete product"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
+                      {/* Actions */}
+                      <td className="py-3.5 px-5 text-right">
+                        <div className="flex items-center justify-end gap-1.5">
+                          <Link
+                            href={`/admin/products/${product.id}`}
+                            className="p-1.5 rounded-md text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 transition-colors"
+                            title="Edit product"
+                          >
+                            <Edit2 className="w-3.5 h-3.5" />
+                          </Link>
+                          <button
+                            onClick={() => handleDelete(product.id, product.name)}
+                            className="p-1.5 rounded-md text-zinc-400 hover:text-rose-600 hover:bg-rose-50 transition-colors"
+                            title="Delete product"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   );

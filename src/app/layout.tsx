@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter, Playfair_Display } from 'next/font/google';
+import { Inter, Poppins } from 'next/font/google';
 import './globals.css';
 import { AuthProvider } from '@/context/AuthContext';
 import { CartProvider } from '@/context/CartContext';
@@ -15,24 +15,26 @@ const inter = Inter({
   variable: '--font-inter',
 });
 
-const playfair = Playfair_Display({
+const poppins = Poppins({
   subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'],
   display: 'swap',
-  variable: '--font-playfair',
+  variable: '--font-poppins',
 });
 
 export const metadata: Metadata = {
-  title: 'MUSTAFA LIFE | Naturally Better. Everyday.',
+  title: 'HERBAL E COM LIFE | Naturally Better. Everyday.',
   description:
     'Discover thoughtfully crafted organic and herbal products made for healthier everyday living. 100% natural ingredients, clean formulations, and time-tested Ayurvedic remedies.',
   keywords: [
-    'Mustafa Life',
-    'Organic Wellness',
+    'Herbal E Com Life',
+    'Organic Personal Care',
     'Ayurvedic Herbs',
     'Natural Skincare',
-    'Organic Moringa',
+    'Herbal Soaps',
     'Herbal Hair Oil',
-    'Clean Nutrition',
+    'Handmade Bath Bars',
+    'Plant-Based Beauty',
   ],
 };
 
@@ -42,7 +44,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${playfair.variable} scroll-smooth`}>
+    <html lang="en" className={`${inter.variable} ${poppins.variable} scroll-smooth`}>
       <body className="min-h-screen flex flex-col bg-cream-100 text-charcoal-900 font-sans selection:bg-sage-200 selection:text-forest-950">
         <AuthProvider>
           <ContentProvider>

@@ -54,164 +54,174 @@ export default function AdminOrdersPage() {
   });
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 font-admin-body">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-zinc-200/60">
         <div>
-          <span className="text-xs uppercase font-bold tracking-widest text-sage-600">
-            Fulfillment & Dispatch
-          </span>
-          <h1 className="font-serif text-2xl sm:text-3xl font-bold text-forest-950">
-            Order Management ({orders.length})
+          <h1 className="font-admin-heading text-2xl sm:text-3xl font-semibold tracking-tight text-zinc-950">
+            Orders
           </h1>
+          <p className="text-xs sm:text-sm text-zinc-500 mt-1">
+            Fulfill orders, track shipping logistics, and update dispatch statuses.
+          </p>
         </div>
       </div>
 
       {statusMessage && (
-        <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 flex items-center gap-2">
-          <CheckCircle2 className="w-4 h-4 shrink-0" />
+        <div className="p-3 rounded-lg bg-emerald-50 border border-emerald-200/80 text-xs text-emerald-800 flex items-center gap-2">
+          <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-600" />
           <span>{statusMessage}</span>
         </div>
       )}
 
-      {/* Filters Bar */}
-      <div className="bg-white p-4 rounded-2xl border border-sand-200 shadow-sm flex flex-col sm:flex-row gap-3 items-center justify-between">
+      {/* Filters Toolbar */}
+      <div className="bg-white p-3 sm:p-4 rounded-xl border border-zinc-200/80 shadow-[0_1px_3px_rgba(0,0,0,0.04)] flex flex-col sm:flex-row gap-3 items-center justify-between">
         <div className="relative w-full sm:max-w-xs">
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search by order #, customer, email, phone..."
-            className="w-full bg-sand-50/70 border border-sand-300 rounded-xl px-3 py-2 pl-9 text-xs text-charcoal-900 focus:outline-none focus:ring-2 focus:ring-forest-700"
+            placeholder="Search by order #, customer, phone..."
+            className="w-full bg-zinc-50/70 border border-zinc-200 rounded-lg px-3 py-2 pl-8 text-xs text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-1 focus:ring-forest-800 focus:border-forest-800 transition-colors"
           />
-          <Search className="w-3.5 h-3.5 text-charcoal-400 absolute left-3 top-2.5" />
+          <Search className="w-3.5 h-3.5 text-zinc-400 absolute left-2.5 top-2.5" />
         </div>
 
-        <div className="w-full sm:w-auto">
+        <div className="w-full sm:w-auto flex items-center gap-2">
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="w-full sm:w-auto bg-sand-50/70 border border-sand-300 rounded-xl px-3 py-2 text-xs text-charcoal-900 focus:outline-none focus:ring-2 focus:ring-forest-700"
+            className="w-full sm:w-auto bg-zinc-50/70 border border-zinc-200 rounded-lg px-3 py-2 text-xs text-zinc-800 focus:outline-none focus:ring-1 focus:ring-forest-800 focus:border-forest-800 transition-colors"
           >
-            <option value="">All Statuses</option>
+            <option value="">All Statuses ({orders.length})</option>
             {ALL_STATUSES.map((s) => (
               <option key={s} value={s}>
                 {s.charAt(0).toUpperCase() + s.slice(1)}
               </option>
             ))}
           </select>
+          <span className="text-xs text-zinc-400 whitespace-nowrap hidden sm:inline">
+            {filteredOrders.length} order{filteredOrders.length === 1 ? '' : 's'}
+          </span>
         </div>
       </div>
 
       {/* Orders Table */}
-      <div className="bg-white rounded-2xl border border-sand-200 shadow-sm overflow-hidden">
+      <div className="bg-white rounded-xl border border-zinc-200/80 shadow-[0_1px_3px_rgba(0,0,0,0.04)] overflow-hidden">
         {loading ? (
-          <div className="py-12 text-center text-xs text-charcoal-500">Loading orders...</div>
+          <div className="py-16 text-center text-xs text-zinc-400">Loading order records...</div>
         ) : filteredOrders.length === 0 ? (
-          <div className="py-12 text-center space-y-2">
-            <ShoppingBag className="w-8 h-8 text-charcoal-400 mx-auto" />
-            <p className="text-xs text-charcoal-600">No orders found matching your filter.</p>
+          <div className="py-16 text-center space-y-2">
+            <ShoppingBag className="w-8 h-8 text-zinc-300 mx-auto" />
+            <p className="text-xs text-zinc-600 font-medium">No orders match your filter</p>
+            <p className="text-[11px] text-zinc-400">Try clearing the search or status dropdown</p>
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
               <thead>
-                <tr className="bg-sand-50/70 border-b border-sand-200 text-charcoal-500 uppercase tracking-wider font-bold text-[10px]">
-                  <th className="py-3.5 px-4 font-bold">Order Details</th>
-                  <th className="py-3.5 px-4 font-bold">Customer & Shipping</th>
-                  <th className="py-3.5 px-4 font-bold">Items</th>
-                  <th className="py-3.5 px-4 font-bold">Total</th>
-                  <th className="py-3.5 px-4 font-bold">Payment</th>
-                  <th className="py-3.5 px-4 font-bold">Current Status</th>
-                  <th className="py-3.5 px-4 font-bold text-right">Update Status</th>
+                <tr className="border-b border-zinc-100 text-zinc-400 uppercase tracking-wider font-semibold text-[10px] bg-zinc-50/50">
+                  <th className="py-3 px-5 font-semibold">Order</th>
+                  <th className="py-3 px-4 font-semibold">Customer & Destination</th>
+                  <th className="py-3 px-4 font-semibold">Items</th>
+                  <th className="py-3 px-4 font-semibold">Total</th>
+                  <th className="py-3 px-4 font-semibold">Payment</th>
+                  <th className="py-3 px-4 font-semibold">Status</th>
+                  <th className="py-3 px-5 font-semibold text-right">Update Status</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-sand-100">
-                {filteredOrders.map((order) => (
-                  <tr key={order.id} className="hover:bg-sand-50/50 transition-colors">
-                    {/* Order Details */}
-                    <td className="py-4 px-4 align-top">
-                      <p className="font-mono font-bold text-forest-950 text-sm">
-                        {order.order_number}
-                      </p>
-                      <p className="text-[11px] text-charcoal-400 mt-0.5">
-                        {formatDate(order.created_at)}
-                      </p>
-                    </td>
+              <tbody className="divide-y divide-zinc-100 font-admin-body">
+                {filteredOrders.map((order) => {
+                  const itemsCount = order.items?.reduce((acc, i) => acc + i.quantity, 0) || 0;
+                  const addr = order.shipping_address;
 
-                    {/* Customer */}
-                    <td className="py-4 px-4 align-top space-y-0.5 max-w-[200px]">
-                      <p className="font-bold text-charcoal-900">{order.customer_name}</p>
-                      <p className="text-[11px] text-charcoal-500 truncate">{order.customer_email}</p>
-                      <p className="text-[11px] text-charcoal-500 font-medium">{order.customer_phone}</p>
-                      {order.shipping_address?.street && (
-                        <p className="text-[10px] text-charcoal-400 line-clamp-2 pt-1 border-t border-sand-100">
-                          {order.shipping_address.street}, {order.shipping_address.city},{' '}
-                          {order.shipping_address.state} - {order.shipping_address.postalCode}
-                        </p>
-                      )}
-                    </td>
-
-                    {/* Items */}
-                    <td className="py-4 px-4 align-top">
-                      <div className="space-y-1">
-                        {order.items && order.items.length > 0 ? (
-                          order.items.map((it, idx) => (
-                            <div key={idx} className="text-[11px] text-charcoal-700">
-                              <span className="font-semibold">{it.quantity}x</span> {it.product_name}
-                            </div>
-                          ))
-                        ) : (
-                          <span className="text-[11px] text-charcoal-400">Products in parcel</span>
-                        )}
-                      </div>
-                    </td>
-
-                    {/* Total */}
-                    <td className="py-4 px-4 align-top">
-                      <span className="font-bold text-forest-900 font-sans text-sm">
-                        {formatINR(order.total_amount)}
-                      </span>
-                      {order.shipping_amount > 0 && (
-                        <span className="block text-[10px] text-charcoal-400">
-                          (+{formatINR(order.shipping_amount)} ship)
+                  return (
+                    <tr key={order.id} className="hover:bg-zinc-50/60 transition-colors">
+                      {/* Order Number & Date */}
+                      <td className="py-3.5 px-5 align-top">
+                        <span className="font-mono font-medium text-zinc-900 block text-xs">
+                          {order.order_number}
                         </span>
-                      )}
-                    </td>
+                        <span className="text-[11px] text-zinc-400 block mt-0.5">
+                          {formatDate(order.created_at)}
+                        </span>
+                      </td>
 
-                    {/* Payment */}
-                    <td className="py-4 px-4 align-top">
-                      <span className="font-bold uppercase text-[11px] text-forest-900 bg-sage-50 px-2 py-0.5 rounded border border-sage-200">
-                        {order.payment_method}
-                      </span>
-                      <span className="block text-[10px] text-charcoal-400 capitalize mt-1">
-                        {order.payment_status}
-                      </span>
-                    </td>
+                      {/* Customer & Address Preview */}
+                      <td className="py-3.5 px-4 align-top">
+                        <span className="font-medium text-zinc-900 block">
+                          {order.customer_name}
+                        </span>
+                        <span className="text-[11px] text-zinc-500 block">
+                          {order.customer_phone}
+                        </span>
+                        {addr && (
+                          <span className="text-[11px] text-zinc-400 block truncate max-w-[200px]">
+                            {addr.city}, {addr.state} - {addr.postalCode}
+                          </span>
+                        )}
+                      </td>
 
-                    {/* Status Badge */}
-                    <td className="py-4 px-4 align-top">
-                      <OrderStatusBadge status={order.status} />
-                    </td>
+                      {/* Items */}
+                      <td className="py-3.5 px-4 align-top">
+                        <span className="font-medium text-zinc-800 block">
+                          {itemsCount} item{itemsCount === 1 ? '' : 's'}
+                        </span>
+                        <div className="text-[11px] text-zinc-400 max-w-[200px] truncate mt-0.5">
+                          {order.items?.map((i) => `${i.product_name} (${i.quantity})`).join(', ')}
+                        </div>
+                      </td>
 
-                    {/* Status Changer */}
-                    <td className="py-4 px-4 align-top text-right">
-                      <select
-                        value={order.status}
-                        onChange={(e) =>
-                          handleStatusChange(order.id, e.target.value as OrderStatus)
-                        }
-                        className="bg-sand-50 border border-sand-300 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-charcoal-900 focus:outline-none focus:ring-2 focus:ring-forest-700 cursor-pointer"
-                      >
-                        {ALL_STATUSES.map((st) => (
-                          <option key={st} value={st}>
-                            {st.charAt(0).toUpperCase() + st.slice(1)}
-                          </option>
-                        ))}
-                      </select>
-                    </td>
-                  </tr>
-                ))}
+                      {/* Total Amount */}
+                      <td className="py-3.5 px-4 align-top">
+                        <span className="font-admin-heading font-medium text-zinc-950 block tabular-nums">
+                          {formatINR(order.total_amount)}
+                        </span>
+                        {order.shipping_amount === 0 ? (
+                          <span className="text-[10px] text-emerald-700 font-medium">
+                            Free Shipping
+                          </span>
+                        ) : (
+                          <span className="text-[10px] text-zinc-400">
+                            +₹{order.shipping_amount} shipping
+                          </span>
+                        )}
+                      </td>
+
+                      {/* Payment */}
+                      <td className="py-3.5 px-4 align-top">
+                        <span className="text-[11px] uppercase font-medium text-zinc-700 bg-zinc-100 px-2 py-0.5 rounded border border-zinc-200/60 inline-block">
+                          {order.payment_method}
+                        </span>
+                        <span className="text-[10px] text-zinc-400 block mt-1 capitalize">
+                          {order.payment_status}
+                        </span>
+                      </td>
+
+                      {/* Current Status Badge */}
+                      <td className="py-3.5 px-4 align-top">
+                        <OrderStatusBadge status={order.status} />
+                      </td>
+
+                      {/* Status Dropdown Action */}
+                      <td className="py-3.5 px-5 text-right align-top">
+                        <select
+                          value={order.status}
+                          onChange={(e) =>
+                            handleStatusChange(order.id, e.target.value as OrderStatus)
+                          }
+                          className="bg-white border border-zinc-200 rounded-lg px-2.5 py-1 text-xs text-zinc-800 font-medium hover:border-zinc-300 focus:outline-none focus:ring-1 focus:ring-forest-800 transition-colors"
+                        >
+                          {ALL_STATUSES.map((st) => (
+                            <option key={st} value={st}>
+                              {st.charAt(0).toUpperCase() + st.slice(1)}
+                            </option>
+                          ))}
+                        </select>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>

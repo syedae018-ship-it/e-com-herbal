@@ -1,4 +1,4 @@
-# 🌿 MUSTAFA LIFE - Phase 2 Supabase Backend Integration Guide
+# 🌿 HERBAL E COM LIFE - Phase 2 Supabase Backend Integration Guide
 
 > **Naturally Better. Everyday.**  
 > A complete, modern, high-converting organic & herbal wellness e-commerce platform built with Next.js 14 (App Router), React 18, TypeScript, Tailwind CSS, and Supabase (PostgreSQL, Authentication, Row Level Security, and Storage).
@@ -7,7 +7,7 @@
 
 ## 📖 Table of Contents
 
-1. [What Supabase Is & How MUSTAFA LIFE Uses It](#1-what-supabase-is--how-mustafa-life-uses-it)
+1. [What Supabase Is & How HERBAL E COM LIFE Uses It](#1-what-supabase-is--how-herbal-e-com-life-uses-it)
 2. [Step-by-Step Supabase Project Setup](#2-step-by-step-supabase-project-setup)
 3. [Environment Variables Setup (`.env.local`)](#3-environment-variables-setup-envlocal)
 4. [Running the Database Schema (`schema.sql`)](#4-running-the-database-schema-schemasql)
@@ -20,7 +20,7 @@
 
 ---
 
-## 1. What Supabase Is & How MUSTAFA LIFE Uses It
+## 1. What Supabase Is & How HERBAL E COM LIFE Uses It
 
 [Supabase](https://supabase.com) is an open-source Firebase alternative powered by PostgreSQL. In this project, Supabase handles:
 
@@ -105,18 +105,20 @@
 
 ## 7. Creating & Promoting Your First Admin User
 
-Mustafa Life uses strict database-level **Role-Based Access Control (RBAC)**.
+Herbal E Com Life uses strict database-level **Role-Based Access Control (RBAC)**.
+By default, all new users signing up via `/signup` or `/login` are assigned the `customer` role.
 
-### Step 1: Create your account
-1. Start your local server (`npm run dev`) and visit `http://localhost:3000/signup`.
-2. Register an account with your desired admin email (e.g. `admin@mustafalife.com`) and password.
+To grant administrator rights to an account:
 
-### Step 2: Promote user to Admin in Supabase
-1. In Supabase Dashboard -> **SQL Editor**, run this query:
+1. Create your admin user in Supabase Authentication:
+   - Go to your Supabase Dashboard -> **Authentication** -> **Users**.
+   - Click **Add user** -> **Create user**.
+2. Register an account with your desired admin email (e.g. `admin@herbalecomlife.com`) and password.
+3. Open the **SQL Editor** in Supabase and run the following command to upgrade the role:
    ```sql
    UPDATE public.profiles
    SET role = 'admin'
-   WHERE email = 'admin@mustafalife.com';
+   WHERE email = 'admin@herbalecomlife.com';
    ```
 2. Now visit `http://localhost:3000/admin/login` and log in. You will be granted full access to the Admin Dashboard!
 
