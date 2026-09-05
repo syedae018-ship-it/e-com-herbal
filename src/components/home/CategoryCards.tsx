@@ -38,8 +38,8 @@ export const CategoryCards: React.FC<CategoryCardsProps> = ({ categories }) => {
         </div>
 
 
-        {/* Category Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5 sm:gap-6">
+        {/* Category Grid: 2-col on mobile, 3-col on tablet, 5-col on desktop */}
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3 sm:gap-6">
           {categories.map((category) => (
             <div
               key={category.id}
@@ -50,33 +50,33 @@ export const CategoryCards: React.FC<CategoryCardsProps> = ({ categories }) => {
                 <Image
                   src={
                     category.image_url ||
-                    'https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80'
+                    '/images/fallback.svg'
                   }
                   alt={category.name}
                   fill
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw"
+                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
                   className="object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
               </div>
 
               {/* Body */}
-              <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
-                <div className="space-y-1.5">
-                  <h3 className="font-serif text-base font-bold text-forest-950 group-hover:text-forest-700 transition-colors">
+              <div className="p-3 sm:p-5 flex-1 flex flex-col justify-between space-y-3 sm:space-y-4">
+                <div className="space-y-1 sm:space-y-1.5">
+                  <h3 className="font-serif text-xs sm:text-base font-bold text-forest-950 group-hover:text-forest-700 transition-colors line-clamp-1">
                     {category.name}
                   </h3>
-                  <p className="text-xs text-charcoal-500 line-clamp-2 leading-relaxed">
+                  <p className="text-[10px] sm:text-xs text-charcoal-500 line-clamp-2 leading-relaxed hidden xs:block">
                     {category.description}
                   </p>
                 </div>
 
                 <Link
                   href={`/category/${category.slug}`}
-                  className="inline-flex items-center justify-between w-full pt-3 border-t border-sand-100 text-xs font-bold text-forest-900 group-hover:text-forest-700 transition-colors"
+                  className="inline-flex items-center justify-between w-full pt-2 sm:pt-3 border-t border-sand-100 text-[10px] sm:text-xs font-bold text-forest-900 group-hover:text-forest-700 transition-colors"
                 >
-                  <span>Explore Products</span>
-                  <ArrowRight className="w-3.5 h-3.5 transform group-hover:translate-x-1 transition-transform" />
+                  <span>Explore</span>
+                  <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 transform group-hover:translate-x-1 transition-transform" />
                 </Link>
               </div>
             </div>

@@ -33,7 +33,7 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
     if (typeof document !== 'undefined') {
       document.documentElement.setAttribute('data-theme', activeTheme);
       try {
-        localStorage.setItem('mustafa_life_active_theme', activeTheme);
+        localStorage.setItem('nutri_life_active_theme', activeTheme);
       } catch {
         // ignore
       }
@@ -58,11 +58,11 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
       fetchContent();
     };
 
-    window.addEventListener('mustafa_life_content_updated', handleContentUpdate);
+    window.addEventListener('nutri_life_content_updated', handleContentUpdate);
     window.addEventListener('storage', handleContentUpdate);
 
     return () => {
-      window.removeEventListener('mustafa_life_content_updated', handleContentUpdate);
+      window.removeEventListener('nutri_life_content_updated', handleContentUpdate);
       window.removeEventListener('storage', handleContentUpdate);
     };
   }, [fetchContent]);
@@ -87,7 +87,7 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
     if (typeof document !== 'undefined') {
       document.documentElement.setAttribute('data-theme', themeId);
       try {
-        localStorage.setItem('mustafa_life_active_theme', themeId);
+        localStorage.setItem('nutri_life_active_theme', themeId);
       } catch {
         // ignore
       }

@@ -2,8 +2,48 @@ import { supabase, isSupabaseConfigured } from '../supabase/client';
 import { Product } from '../types';
 import { SEED_PRODUCTS, SEED_CATEGORIES } from '../seed-data';
 
-// Local in-memory store for offline development and initial zero-config preview
-let localProducts: Product[] = [...SEED_PRODUCTS];
+const LOCAL_STORAGE_KEY = 'nutri_life_custom_products_v1';
+
+function getInitialProducts(): Product[] {
+  if (typeof window !== 'undefined') {
+    try {
+      const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          // Merge images from SEED_PRODUCTS if product has old images or seed matches
+          return parsed.map((p: Product) => {
+            const seed = SEED_PRODUCTS.find((s) => s.id === p.id || s.slug === p.slug);
+            if (seed) {
+              const hasCustomUpload = p.images?.some((img) => img.startsWith('data:image/'));
+              if (!hasCustomUpload) {
+                return { ...p, images: seed.images };
+              }
+            }
+            return p;
+          });
+        }
+      }
+    } catch {
+      // ignore
+    }
+  }
+  return [...SEED_PRODUCTS];
+}
+
+let localProducts: Product[] = getInitialProducts();
+
+function syncLocalProductsToStorage() {
+  if (typeof window !== 'undefined') {
+    try {
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(localProducts));
+      window.dispatchEvent(new Event('nutri_life_products_updated'));
+      window.dispatchEvent(new Event('storage'));
+    } catch {
+      // ignore
+    }
+  }
+}
 
 export interface GetProductsFilter {
   categorySlug?: string;
@@ -21,6 +61,7 @@ export interface GetProductsFilter {
  */
 export async function getProducts(filter: GetProductsFilter = {}): Promise<Product[]> {
   if (!isSupabaseConfigured() || !supabase) {
+    localProducts = getInitialProducts();
     let result = [...localProducts].filter((p) => p.is_active);
 
     if (filter.featuredOnly) {
@@ -290,9 +331,10 @@ export async function updateProduct(
       localProducts[index] = {
         ...localProducts[index],
         ...productData,
-        images: imageUrls || localProducts[index].images,
+        images: imageUrls !== undefined ? imageUrls : localProducts[index].images,
         updated_at: new Date().toISOString(),
       };
+      syncLocalProductsToStorage();
       return { success: true };
     }
     return { success: false, error: 'Product not found' };
@@ -340,11 +382,36 @@ export async function updateProduct(
 }
 
 /**
+ * Resets a product's images to the original curated herbal seed images.
+ */
+export async function resetProductImage(id: string): Promise<{ success: boolean; defaultImages?: string[]; error?: string }> {
+  const seed = SEED_PRODUCTS.find((p) => p.id === id);
+  if (!seed) {
+    return { success: false, error: 'Product seed data not found' };
+  }
+  const res = await updateProduct(id, {}, seed.images);
+  return { success: res.success, defaultImages: seed.images, error: res.error };
+}
+
+/**
+ * Resets all products' images to their corresponding botanical herbal seed images.
+ */
+export async function resetAllProductImagesToSeed(): Promise<{ success: boolean; count: number; error?: string }> {
+  let count = 0;
+  for (const seed of SEED_PRODUCTS) {
+    const res = await updateProduct(seed.id, {}, seed.images);
+    if (res.success) count++;
+  }
+  return { success: true, count };
+}
+
+/**
  * Deletes a product from Supabase (cascades related product_images).
  */
 export async function deleteProduct(id: string): Promise<{ success: boolean; error?: string }> {
   if (!isSupabaseConfigured() || !supabase) {
     localProducts = localProducts.filter((p) => p.id !== id);
+    syncLocalProductsToStorage();
     return { success: true };
   }
 

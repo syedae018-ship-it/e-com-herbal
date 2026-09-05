@@ -105,8 +105,13 @@ export const ProductForm: React.FC<ProductFormProps> = ({
     }
 
     if (!isSupabaseConfigured() || !supabase) {
-      const objectUrl = URL.createObjectURL(file);
-      setImages((prev) => [...prev, objectUrl]);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        if (typeof reader.result === 'string') {
+          setImages((prev) => [...prev, reader.result as string]);
+        }
+      };
+      reader.readAsDataURL(file);
       return;
     }
 

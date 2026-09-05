@@ -5,11 +5,11 @@
 
 -- 1. INSERT CATEGORIES
 INSERT INTO public.categories (id, name, slug, description, image_url, is_active) VALUES
-('c1111111-1111-1111-1111-111111111111', 'Herbal Skincare', 'herbal-skincare', 'Handcrafted botanical facial cleansers, nourishing night creams, and clarifying herbal soaps.', 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=800&q=80', true),
-('c2222222-2222-2222-2222-222222222222', 'Hair Care', 'hair-care', 'Traditional herbal hair oils, root-strengthening shampoos, and botanical conditioners.', 'https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?auto=format&fit=crop&w=800&q=80', true),
-('c3333333-3333-3333-3333-333333333333', 'Natural Bath & Body', 'bath-and-body', 'Cold-processed artisanal bath bars, calming body washes, and restorative body lotions.', 'https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?auto=format&fit=crop&w=800&q=80', true),
-('c4444444-4444-4444-4444-444444444444', 'Organic Essentials', 'organic-essentials', 'Cold-pressed virgin coconut oils, pure aloe vera gels, and multi-purpose botanical care.', 'https://images.unsplash.com/photo-1526947425960-945c6e72858f?auto=format&fit=crop&w=800&q=80', true),
-('c5555555-5555-5555-5555-555555555555', 'Natural Wellness', 'natural-wellness', 'Authentic Ayurvedic herbal bath powders, traditional ubtans, and soothing botanicals.', 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80', true)
+('c1111111-1111-1111-1111-111111111111', 'Herbal Skincare', 'herbal-skincare', 'Handcrafted botanical facial cleansers, nourishing night creams, and clarifying herbal soaps.', '/images/categories/herbal-skincare.jpg', true),
+('c2222222-2222-2222-2222-222222222222', 'Hair Care', 'hair-care', 'Traditional herbal hair oils, root-strengthening shampoos, and botanical conditioners.', '/images/categories/hair-care.jpg', true),
+('c3333333-3333-3333-3333-333333333333', 'Natural Bath & Body', 'bath-and-body', 'Cold-processed artisanal bath bars, calming body washes, and restorative body lotions.', '/images/categories/bath-and-body.jpg', true),
+('c4444444-4444-4444-4444-444444444444', 'Organic Essentials', 'organic-essentials', 'Cold-pressed virgin coconut oils, pure aloe vera gels, and multi-purpose botanical care.', '/images/categories/organic-essentials.jpg', true),
+('c5555555-5555-5555-5555-555555555555', 'Natural Wellness', 'natural-wellness', 'Authentic Ayurvedic herbal bath powders, traditional ubtans, and soothing botanicals.', '/images/categories/natural-wellness.jpg', true)
 ON CONFLICT (id) DO UPDATE SET
     name = EXCLUDED.name,
     slug = EXCLUDED.slug,
@@ -232,16 +232,16 @@ ON CONFLICT (id) DO UPDATE SET
 
 -- 3. INSERT PRODUCT IMAGES
 INSERT INTO public.product_images (product_id, image_url, is_primary, display_order) VALUES
-('p1111111-1111-1111-1111-111111111111', 'https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?auto=format&fit=crop&w=800&q=80', true, 0),
-('p2222222-2222-2222-2222-222222222222', 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&w=800&q=80', true, 0),
-('p3333333-3333-3333-3333-333333333333', 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=800&q=80', true, 0),
-('p4444444-4444-4444-4444-444444444444', 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=800&q=80', true, 0),
-('p5555555-5555-5555-5555-555555555555', 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=800&q=80', true, 0),
-('p6666666-6666-6666-6666-666666666666', 'https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?auto=format&fit=crop&w=800&q=80', true, 0),
-('p7777777-7777-7777-7777-777777777777', 'https://images.unsplash.com/photo-1585751119414-ef2636f8aede?auto=format&fit=crop&w=800&q=80', true, 0),
-('p8888888-8888-8888-8888-888888888888', 'https://images.unsplash.com/photo-1607006411601-775c8cc632dc?auto=format&fit=crop&w=800&q=80', true, 0),
-('p9999999-9999-9999-9999-999999999999', 'https://images.unsplash.com/photo-1556228852-6d35a585d566?auto=format&fit=crop&w=800&q=80', true, 0),
-('paaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'https://images.unsplash.com/photo-1526947425960-945c6e72858f?auto=format&fit=crop&w=800&q=80', true, 0),
-('pbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb', 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=800&q=80', true, 0),
-('pccccccc-cccc-cccc-cccc-cccccccccccc', 'https://images.unsplash.com/photo-1611080626919-7cf5a9dbab5b?auto=format&fit=crop&w=800&q=80', true, 0)
+('p1111111-1111-1111-1111-111111111111', '/images/products/neem-tulsi-soap.jpg', true, 0),
+('p2222222-2222-2222-2222-222222222222', '/images/products/aloe-face-wash.jpg', true, 0),
+('p3333333-3333-3333-3333-333333333333', '/images/products/rose-sandalwood-cream.jpg', true, 0),
+('p4444444-4444-4444-4444-444444444444', '/images/products/turmeric-face-cream.jpg', true, 0),
+('p5555555-5555-5555-5555-555555555555', '/images/products/amla-bhringraj-oil.jpg', true, 0),
+('p6666666-6666-6666-6666-666666666666', '/images/products/neem-shikakai-shampoo.jpg', true, 0),
+('p7777777-7777-7777-7777-777777777777', '/images/products/hibiscus-conditioner.jpg', true, 0),
+('p8888888-8888-8888-8888-888888888888', '/images/products/sandalwood-bath-bar.jpg', true, 0),
+('p9999999-9999-9999-9999-999999999999', '/images/products/aloe-rose-lotion.jpg', true, 0),
+('paaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', '/images/products/virgin-coconut-oil.jpg', true, 0),
+('pbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb', '/images/products/pure-aloe-gel.jpg', true, 0),
+('pccccccc-cccc-cccc-cccc-cccccccccccc', '/images/products/herbal-ubtan-powder.jpg', true, 0)
 ON CONFLICT DO NOTHING;

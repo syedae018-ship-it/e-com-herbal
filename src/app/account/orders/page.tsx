@@ -152,7 +152,7 @@ export default function CustomerOrdersPage() {
                         <Image
                           src={
                             item.image_url ||
-                            'https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=200&q=80'
+                            '/images/fallback.svg'
                           }
                           alt={item.product_name}
                           fill

@@ -28,22 +28,22 @@ export const Footer: React.FC = () => {
   }
 
   return (
-    <footer className="bg-forest-950 text-cream-100 border-t border-forest-900 mt-20">
+    <footer className="bg-forest-950 text-cream-100 border-t border-forest-900 mt-12 sm:mt-20">
       {/* Brand Trust Strip */}
       {footer.trust_badges && footer.trust_badges.length > 0 && (
-        <div className="border-b border-forest-900/60 bg-forest-900/40 py-8">
+        <div className="border-b border-forest-900/60 bg-forest-900/40 py-6 sm:py-8">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 text-center">
               {footer.trust_badges.map((badge, idx) => (
                 <div key={idx} className="flex flex-col items-center space-y-1">
-                  {idx === 0 && <Leaf className="w-6 h-6 text-sage-400" />}
-                  {idx === 1 && <ShieldCheck className="w-6 h-6 text-sage-400" />}
-                  {idx === 2 && <Heart className="w-6 h-6 text-sage-400" />}
-                  {idx === 3 && <Sparkles className="w-6 h-6 text-sage-400" />}
-                  <span className="font-semibold text-xs tracking-wide text-white uppercase mt-1">
+                  {idx === 0 && <Leaf className="w-5 h-5 sm:w-6 sm:h-6 text-sage-400" />}
+                  {idx === 1 && <ShieldCheck className="w-5 h-5 sm:w-6 sm:h-6 text-sage-400" />}
+                  {idx === 2 && <Heart className="w-5 h-5 sm:w-6 sm:h-6 text-sage-400" />}
+                  {idx === 3 && <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-sage-400" />}
+                  <span className="font-semibold text-[11px] sm:text-xs tracking-wide text-white uppercase mt-0.5 sm:mt-1">
                     {badge.title}
                   </span>
-                  <span className="text-[11px] text-sage-300">{badge.description}</span>
+                  <span className="text-[10px] sm:text-[11px] text-sage-300">{badge.description}</span>
                 </div>
               ))}
             </div>
@@ -52,14 +52,14 @@ export const Footer: React.FC = () => {
       )}
 
       {/* Main Footer Links */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 sm:gap-10">
           {/* Brand Info */}
-          <div className="lg:col-span-2 space-y-4">
+          <div className="col-span-2 lg:col-span-2 space-y-3 sm:space-y-4">
             <Link href="/" className="flex items-center gap-2.5">
               {settings.logo_url ? (
                 <div className="relative w-8 h-8 rounded-full overflow-hidden shrink-0 border border-sage-400">
-                  <Image src={settings.logo_url} alt={settings.site_name || 'HERBAL E COM LIFE'} fill className="object-cover" />
+                  <Image src={settings.logo_url} alt={settings.site_name || 'NUTRI LIFE'} fill className="object-cover" />
                 </div>
               ) : (
                 <div className="w-8 h-8 rounded-full bg-sage-400 flex items-center justify-center text-forest-950 font-bold">
@@ -67,7 +67,7 @@ export const Footer: React.FC = () => {
                 </div>
               )}
               <span className="font-serif text-xl font-bold tracking-tight text-white">
-                {settings.site_name || 'HERBAL E COM LIFE'}
+                {settings.site_name || 'NUTRI LIFE'}
               </span>
             </Link>
             <p className="text-xs text-sage-200/80 leading-relaxed max-w-sm">
@@ -259,7 +259,7 @@ export const Footer: React.FC = () => {
         <div className="border-t border-forest-900/80 mt-12 pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-sage-400 gap-4">
           <p>
             © {new Date().getFullYear()}{' '}
-            {footer.copyright_text || 'HERBAL E COM LIFE India. All rights reserved. Naturally Better. Everyday.'}
+            {footer.copyright_text || 'NUTRI LIFE India. All rights reserved. Naturally Better. Everyday.'}
           </p>
           <div className="flex items-center space-x-6 text-[11px]">
             <Link href="/shop" className="hover:text-white transition-colors">

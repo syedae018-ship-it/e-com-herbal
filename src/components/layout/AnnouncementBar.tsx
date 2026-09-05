@@ -38,19 +38,19 @@ export const AnnouncementBar: React.FC = () => {
   const currentMsg = announcements[currentIndex % announcements.length] || announcements[0];
 
   return (
-    <div className="bg-forest-900 text-cream-100 text-xs py-2 px-4 border-b border-forest-800 tracking-wider">
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
+    <div className="bg-forest-900 text-cream-100 text-[11px] sm:text-xs py-1.5 sm:py-2 px-3 sm:px-4 border-b border-forest-800 tracking-wider">
+      <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
         <button
           onClick={handlePrev}
           aria-label="Previous announcement"
-          className="text-forest-400 hover:text-white p-0.5 transition-colors hidden sm:block"
+          className="text-forest-400 hover:text-white p-0.5 transition-colors hidden sm:block shrink-0"
         >
           <ChevronLeft className="w-3.5 h-3.5" />
         </button>
 
-        <div className="flex-1 text-center flex items-center justify-center gap-2 overflow-hidden">
-          <Sparkles className="w-3.5 h-3.5 text-sage-300 shrink-0 animate-pulse" />
-          <span className="font-medium truncate transition-opacity duration-300">
+        <div className="flex-1 text-center flex items-center justify-center gap-1.5 sm:gap-2 overflow-hidden min-w-0">
+          <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-sage-300 shrink-0 animate-pulse" />
+          <span className="font-medium truncate transition-opacity duration-300 block">
             {currentMsg}
           </span>
         </div>
@@ -58,7 +58,7 @@ export const AnnouncementBar: React.FC = () => {
         <button
           onClick={handleNext}
           aria-label="Next announcement"
-          className="text-forest-400 hover:text-white p-0.5 transition-colors hidden sm:block"
+          className="text-forest-400 hover:text-white p-0.5 transition-colors hidden sm:block shrink-0"
         >
           <ChevronRight className="w-3.5 h-3.5" />
         </button>

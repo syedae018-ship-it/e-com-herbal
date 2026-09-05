@@ -29,13 +29,13 @@ export const CartDrawer: React.FC = () => {
         onClick={() => setIsCartOpen(false)}
       />
 
-      <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
-        <div className="w-screen max-w-md bg-cream-50 shadow-2xl flex flex-col">
+      <div className="fixed inset-y-0 right-0 max-w-full flex pl-0 sm:pl-10">
+        <div className="w-screen max-w-full sm:max-w-md bg-cream-50 shadow-2xl flex flex-col">
           {/* Header */}
-          <div className="p-5 border-b border-sand-200 flex items-center justify-between bg-white">
+          <div className="p-4 sm:p-5 border-b border-sand-200 flex items-center justify-between bg-white">
             <div className="flex items-center gap-2">
               <ShoppingBag className="w-5 h-5 text-forest-900" />
-              <h2 className="font-serif text-lg font-bold text-forest-900">Your Basket</h2>
+              <h2 className="font-serif text-base sm:text-lg font-bold text-forest-900">Your Basket</h2>
               <span className="text-xs bg-sage-100 text-forest-800 font-semibold px-2 py-0.5 rounded-full">
                 {items.reduce((acc, item) => acc + item.quantity, 0)}
               </span>
@@ -99,7 +99,7 @@ export const CartDrawer: React.FC = () => {
                   >
                     <div className="w-20 h-20 relative rounded-lg overflow-hidden bg-sand-100 shrink-0">
                       <Image
-                        src={item.product.images?.[0] || 'https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=400&q=80'}
+                        src={item.product.images?.[0] || '/images/fallback.svg'}
                         alt={item.product.name}
                         fill
                         className="object-cover"

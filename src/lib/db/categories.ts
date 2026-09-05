@@ -2,14 +2,27 @@ import { supabase, isSupabaseConfigured } from '../supabase/client';
 import { Category } from '../types';
 import { SEED_CATEGORIES } from '../seed-data';
 
-const LOCAL_CATEGORIES_KEY = 'mustafa_life_categories';
+const LOCAL_CATEGORIES_KEY = 'nutri_life_categories';
 
 function getLocalCategories(): Category[] {
   if (typeof window === 'undefined') return SEED_CATEGORIES;
   try {
     const raw = localStorage.getItem(LOCAL_CATEGORIES_KEY);
     if (!raw) return SEED_CATEGORIES;
-    return JSON.parse(raw);
+    const parsed = JSON.parse(raw);
+    if (Array.isArray(parsed) && parsed.length > 0) {
+      return parsed.map((cat: Category) => {
+        const seed = SEED_CATEGORIES.find((s) => s.id === cat.id || s.slug === cat.slug);
+        if (seed) {
+          const hasCustomUpload = cat.image_url?.startsWith('data:image/');
+          if (!hasCustomUpload) {
+            return { ...cat, image_url: seed.image_url };
+          }
+        }
+        return cat;
+      });
+    }
+    return SEED_CATEGORIES;
   } catch (err) {
     return SEED_CATEGORIES;
   }
@@ -19,7 +32,7 @@ function saveLocalCategories(cats: Category[]) {
   if (typeof window === 'undefined') return;
   try {
     localStorage.setItem(LOCAL_CATEGORIES_KEY, JSON.stringify(cats));
-    window.dispatchEvent(new CustomEvent('mustafa_life_categories_updated'));
+    window.dispatchEvent(new CustomEvent('nutri_life_categories_updated'));
   } catch (err) {
     console.error('Failed to persist categories to localStorage', err);
   }

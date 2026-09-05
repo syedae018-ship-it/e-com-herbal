@@ -305,7 +305,7 @@ export default function AdminThemesPage() {
                             className="font-serif font-bold text-xs"
                             style={{ color: theme.colors.textPrimary }}
                           >
-                            MUSTAFA LIFE
+                            NUTRI LIFE
                           </span>
                         </div>
                         <div

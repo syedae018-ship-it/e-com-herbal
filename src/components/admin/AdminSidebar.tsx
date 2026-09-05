@@ -78,7 +78,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
             </div>
             <div>
               <span className="font-serif text-base font-bold text-white tracking-tight">
-                HERBAL E COM LIFE
+                NUTRI LIFE
               </span>
               <div className="flex items-center gap-1 text-[10px] text-sage-300 font-bold uppercase tracking-wider">
                 <ShieldCheck className="w-3 h-3 text-emerald-400" />

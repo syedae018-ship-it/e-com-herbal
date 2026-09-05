@@ -91,7 +91,7 @@ export default function AdminLoginPage() {
               Admin Portal
             </span>
             <h1 className="font-admin-heading text-xl font-semibold tracking-tight text-zinc-950 mt-1.5">
-              HERBAL E COM LIFE
+              NUTRI LIFE
             </h1>
             <p className="text-xs text-zinc-500 mt-1 leading-relaxed">
               Manage your products, catalog, and store orders.

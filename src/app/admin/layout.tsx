@@ -70,7 +70,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <Leaf className="w-3.5 h-3.5 text-emerald-300" />
           </div>
           <span className="font-admin-heading text-sm font-semibold tracking-tight text-zinc-900">
-            HERBAL E COM LIFE
+            NUTRI LIFE
           </span>
           <span className="text-[10px] text-zinc-400 uppercase font-medium">Ops</span>
         </div>

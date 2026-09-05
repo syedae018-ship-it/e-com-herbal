@@ -6,35 +6,35 @@ export const SEED_CATEGORIES: Category[] = [
     name: 'Herbal Skincare',
     slug: 'herbal-skincare',
     description: 'Handcrafted botanical facial cleansers, nourishing night creams, and clarifying herbal soaps.',
-    image_url: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=800&q=80',
+    image_url: '/images/categories/herbal-skincare.jpg',
   },
   {
     id: 'c2222222-2222-2222-2222-222222222222',
     name: 'Hair Care',
     slug: 'hair-care',
     description: 'Traditional herbal hair oils, root-strengthening shampoos, and botanical conditioners.',
-    image_url: 'https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?auto=format&fit=crop&w=800&q=80',
+    image_url: '/images/categories/hair-care.jpg',
   },
   {
     id: 'c3333333-3333-3333-3333-333333333333',
     name: 'Natural Bath & Body',
     slug: 'bath-and-body',
     description: 'Cold-processed artisanal bath bars, calming body washes, and restorative body lotions.',
-    image_url: 'https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?auto=format&fit=crop&w=800&q=80',
+    image_url: '/images/categories/bath-and-body.jpg',
   },
   {
     id: 'c4444444-4444-4444-4444-444444444444',
     name: 'Organic Essentials',
     slug: 'organic-essentials',
     description: 'Cold-pressed virgin coconut oils, pure aloe vera gels, and multi-purpose botanical care.',
-    image_url: 'https://images.unsplash.com/photo-1526947425960-945c6e72858f?auto=format&fit=crop&w=800&q=80',
+    image_url: '/images/categories/organic-essentials.jpg',
   },
   {
     id: 'c5555555-5555-5555-5555-555555555555',
     name: 'Natural Wellness',
     slug: 'natural-wellness',
     description: 'Authentic Ayurvedic herbal bath powders, traditional ubtans, and soothing botanicals.',
-    image_url: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80',
+    image_url: '/images/categories/natural-wellness.jpg',
   },
 ];
 
@@ -56,7 +56,7 @@ export const SEED_PRODUCTS: Product[] = [
     ingredients: 'Saponified Coconut Oil, Neem Leaf Extract (Azadirachta indica), Holy Basil (Tulsi) Oil, Castor Oil, Vegetable Glycerin, Pure Essential Oil Blend.',
     how_to_use: 'Lather with warm water between hands or with a natural washcloth. Massage gently over face and body, then rinse clean.',
     images: [
-      'https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?auto=format&fit=crop&w=800&q=80',
+      '/images/products/neem-tulsi-soap.jpg',
     ],
     rating: 4.9,
     review_count: 84,
@@ -78,7 +78,7 @@ export const SEED_PRODUCTS: Product[] = [
     ingredients: 'Organic Aloe Vera Leaf Juice, Cucumber Fruit Extract, Rose Damascena Distillate, Coco-Glucoside (plant surfactant), Vegetable Glycerin, Vitamin E.',
     how_to_use: 'Apply 1-2 pumps onto damp face and neck. Gently massage in upward circular motions for 30 seconds. Rinse thoroughly with water.',
     images: [
-      'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&w=800&q=80',
+      '/images/products/aloe-face-wash.jpg',
     ],
     rating: 4.8,
     review_count: 62,
@@ -100,7 +100,7 @@ export const SEED_PRODUCTS: Product[] = [
     ingredients: 'Pure Sandalwood Hydrosol, Damask Rose Extract, Shea Butter, Cold-Pressed Sweet Almond Oil, Jojoba Seed Oil, Olive Squalane, Vitamin E.',
     how_to_use: 'After evening cleansing, warm a pea-sized amount between fingertips and gently press into face, neck, and decolletage.',
     images: [
-      'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=800&q=80',
+      '/images/products/rose-sandalwood-cream.jpg',
     ],
     rating: 5.0,
     review_count: 91,
@@ -122,7 +122,7 @@ export const SEED_PRODUCTS: Product[] = [
     ingredients: 'Wild Turmeric (Curcuma aromatica) Extract, Kashmiri Saffron Stigmas, Aloe Vera Gel, Almond Oil, Niacinamide, Glycerin, Stearic Acid.',
     how_to_use: 'Apply evenly to clean face and neck each morning. Massage in circular motions until absorbed.',
     images: [
-      'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=800&q=80',
+      '/images/products/turmeric-face-cream.jpg',
     ],
     rating: 4.8,
     review_count: 47,
@@ -144,7 +144,7 @@ export const SEED_PRODUCTS: Product[] = [
     ingredients: 'Cold-Pressed Sesame Oil, Virgin Coconut Oil, Bhringraj (Eclipta alba) Extract, Amla Fruit Extract, Brahmi, Fenugreek Seed Oil, Rosemary Essential Oil.',
     how_to_use: 'Warm a few drops in your hands. Gently massage into scalp using circular fingertip motions. Leave on for at least 1 hour or overnight before shampooing.',
     images: [
-      'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=800&q=80',
+      '/images/products/amla-bhringraj-oil.jpg',
     ],
     rating: 4.9,
     review_count: 112,
@@ -166,7 +166,7 @@ export const SEED_PRODUCTS: Product[] = [
     ingredients: 'Shikakai Pod Extract, Reetha (Soapnut) Extract, Neem Leaf Water, Aloe Vera Juice, Plant Glucoside Surfactants, Peppermint Essential Oil.',
     how_to_use: 'Apply onto wet hair and scalp. Massage gently to work up a rich lather. Rinse thoroughly with lukewarm water.',
     images: [
-      'https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?auto=format&fit=crop&w=800&q=80',
+      '/images/products/neem-shikakai-shampoo.jpg',
     ],
     rating: 4.7,
     review_count: 58,
@@ -188,7 +188,7 @@ export const SEED_PRODUCTS: Product[] = [
     ingredients: 'Hibiscus Flower Water, Fenugreek Seed Extract, Argan Kernel Oil, Shea Butter, Plant-derived Cetearyl Alcohol, Sweet Orange Oil.',
     how_to_use: 'After washing, apply to mid-lengths and ends of damp hair. Leave for 2 to 3 minutes, then rinse thoroughly.',
     images: [
-      'https://images.unsplash.com/photo-1585751119414-ef2636f8aede?auto=format&fit=crop&w=800&q=80',
+      '/images/products/hibiscus-conditioner.jpg',
     ],
     rating: 4.8,
     review_count: 39,
@@ -210,7 +210,7 @@ export const SEED_PRODUCTS: Product[] = [
     ingredients: 'Saponified Coconut Oil, Olive Oil, Sandalwood Wood Powder, Raw Shea Butter, Cocoa Butter, Pure Sandalwood Essential Oil.',
     how_to_use: 'Rub the wet bar over skin or a loofah to create a rich lather. Cleanse gently and rinse thoroughly.',
     images: [
-      'https://images.unsplash.com/photo-1607006411601-775c8cc632dc?auto=format&fit=crop&w=800&q=80',
+      '/images/products/sandalwood-bath-bar.jpg',
     ],
     rating: 4.9,
     review_count: 96,
@@ -232,7 +232,7 @@ export const SEED_PRODUCTS: Product[] = [
     ingredients: 'Organic Aloe Vera Leaf Juice, Rose Flower Water, Sweet Almond Oil, Vegetable Glycerin, Caprylic/Capric Triglycerides, Vitamin E.',
     how_to_use: 'Apply generously across the body immediately after showering while skin is slightly damp. Massage gently until fully absorbed.',
     images: [
-      'https://images.unsplash.com/photo-1556228852-6d35a585d566?auto=format&fit=crop&w=800&q=80',
+      '/images/products/aloe-rose-lotion.jpg',
     ],
     rating: 4.8,
     review_count: 52,
@@ -254,7 +254,7 @@ export const SEED_PRODUCTS: Product[] = [
     ingredients: '100% Pure Organic Cold-Pressed Extra Virgin Coconut (Cocos nucifera) Oil.',
     how_to_use: 'Use as a pre-wash hair mask, all-over body massage oil, or dry skin moisturizer. Liquefies naturally above 24 deg C.',
     images: [
-      'https://images.unsplash.com/photo-1526947425960-945c6e72858f?auto=format&fit=crop&w=800&q=80',
+      '/images/products/virgin-coconut-oil.jpg',
     ],
     rating: 5.0,
     review_count: 128,
@@ -276,7 +276,7 @@ export const SEED_PRODUCTS: Product[] = [
     ingredients: 'Organic Aloe Barbadensis Leaf Juice (99%), Xanthan Gum, Citric Acid, Potassium Sorbate.',
     how_to_use: 'Apply generously to face, body, or scalp as needed. Can be used as a lightweight moisturizer, sleeping mask, or post-sun soother.',
     images: [
-      'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=800&q=80',
+      '/images/products/pure-aloe-gel.jpg',
     ],
     rating: 4.9,
     review_count: 77,
@@ -298,7 +298,7 @@ export const SEED_PRODUCTS: Product[] = [
     ingredients: 'Chickpea (Besan) Flour, Wild Turmeric (Curcuma aromatica), Neem Leaf Powder, Rose Petal Powder, Sandalwood Powder, Vetiver Root Powder.',
     how_to_use: 'Mix 2-3 tablespoons with rose water, milk, or plain water to make a smooth paste. Gently massage over damp skin, leave for 1-2 minutes, then rinse with water.',
     images: [
-      'https://images.unsplash.com/photo-1611080626919-7cf5a9dbab5b?auto=format&fit=crop&w=800&q=80',
+      '/images/products/herbal-ubtan-powder.jpg',
     ],
     rating: 4.8,
     review_count: 68,

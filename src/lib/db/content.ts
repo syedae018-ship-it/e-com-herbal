@@ -27,12 +27,12 @@ export const DEFAULT_WEBSITE_CONTENT: WebsiteContent = {
     secondary_btn_text: 'EXPLORE COLLECTIONS',
     secondary_btn_link: '/shop#categories',
     hero_image:
-      'https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=1000&q=85',
-    hero_card_tag: 'Featured Superfood',
-    hero_card_title: 'Organic Moringa Superfood',
-    hero_card_price: '₹449',
-    hero_card_original_price: '₹599',
-    hero_card_link: '/product/organic-moringa-powder',
+      '/images/products/neem-tulsi-soap.jpg',
+    hero_card_tag: 'Handcrafted Botanical',
+    hero_card_title: 'Neem & Tulsi Herbal Soap',
+    hero_card_price: '₹149',
+    hero_card_original_price: '₹199',
+    hero_card_link: '/product/neem-tulsi-herbal-soap',
     badge1_text: '100% Certified Organic',
     badge2_text: 'Ayush & GMP Certified',
     badge3_text: 'Free Delivery Above ₹499',
@@ -144,7 +144,7 @@ export const DEFAULT_WEBSITE_CONTENT: WebsiteContent = {
     description:
       'We believe everyday wellness starts with honest ingredients and mindful choices. No fillers, no hidden nasties, and no artificial shortcuts. Just whole, potent botanicals formulated to nurture your body inside and out.',
     image_url:
-      'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=1000&q=80',
+      '/images/categories/herbal-skincare.jpg',
     image_tag: 'Zero Compromise Philosophy',
     image_tag_sub: 'Rooted in ancient Ayurveda. Perfected by modern lab standards.',
     bullet1: 'Single-origin herbs harvested at peak bioactive potency',
@@ -156,7 +156,7 @@ export const DEFAULT_WEBSITE_CONTENT: WebsiteContent = {
   why_herbal_life: {
     is_enabled: true,
     badge_text: 'Our Standard of Purity',
-    heading: 'Why Choose Mustafa Life',
+    heading: 'Why Choose Nutri Life',
     subtitle: 'We hold our products to the highest standards of clean holistic wellness.',
     items: [
       {
@@ -189,7 +189,7 @@ export const DEFAULT_WEBSITE_CONTENT: WebsiteContent = {
     is_enabled: true,
     badge_text: 'Real Stories, Real Wellness',
     heading: 'Loved by Thousands Across India',
-    subtitle: 'Read how Mustafa Life has become an indispensable part of daily wellness routines.',
+    subtitle: 'Read how Nutri Life has become an indispensable part of daily wellness routines.',
     items: [
       {
         id: 'rev-1',
@@ -234,7 +234,7 @@ export const DEFAULT_WEBSITE_CONTENT: WebsiteContent = {
     button_text: 'Subscribe',
   },
   settings: {
-    site_name: 'MUSTAFA LIFE',
+    site_name: 'NUTRI LIFE',
     site_tagline: 'Naturally Better. Everyday.',
     active_theme: 'herbal-beige-brown',
     logo_url: '',
@@ -243,8 +243,8 @@ export const DEFAULT_WEBSITE_CONTENT: WebsiteContent = {
     health_wellness_message: 'Holistic living crafted with 100% natural and certified organic ingredients.',
     product_tagline: 'Fresh Small Batches Handcrafted for Maximum Potency',
     cta_message: 'Discover pure herbal remedies for everyday life.',
-    welcome_message: 'Welcome to Mustafa Life — Your Pure Botanical Haven',
-    contact_email: 'care@mustafalife.com',
+    welcome_message: 'Welcome to Nutri Life — Your Pure Botanical Haven',
+    contact_email: 'care@nutrilife.com',
     contact_phone: '+91 98765 43210',
     free_shipping_threshold: 499,
     announcement_bar_enabled: true,
@@ -258,12 +258,12 @@ export const DEFAULT_WEBSITE_CONTENT: WebsiteContent = {
   footer: {
     about_text:
       'Naturally Better. Everyday. We formulate clean, honest, and high-potency herbal remedies and nutrition designed to elevate daily health, skin vitality, and hair wellness.',
-    copyright_text: `© ${new Date().getFullYear()} MUSTAFA LIFE India. All rights reserved. Naturally Better. Everyday.`,
+    copyright_text: `© ${new Date().getFullYear()} NUTRI LIFE India. All rights reserved. Naturally Better. Everyday.`,
     instagram_url: 'https://instagram.com',
     facebook_url: 'https://facebook.com',
     twitter_url: 'https://twitter.com',
     youtube_url: 'https://youtube.com',
-    care_email: 'care@mustafalife.com',
+    care_email: 'care@nutrilife.com',
     trust_badges: [
       { icon: 'leaf', title: '100% Organic', description: 'Pure bioactive botanical extracts' },
       { icon: 'shield', title: 'Lab Tested', description: 'Zero toxins, heavy metals or fillers' },
@@ -273,7 +273,7 @@ export const DEFAULT_WEBSITE_CONTENT: WebsiteContent = {
   },
 };
 
-const STORAGE_KEY = 'mustafa_life_cms_content_v1';
+const STORAGE_KEY = 'nutri_life_cms_content_v1';
 
 let memoryContent: WebsiteContent = { ...DEFAULT_WEBSITE_CONTENT };
 
@@ -344,7 +344,7 @@ export async function updateWebsiteSection<K extends keyof WebsiteContent>(
   if (typeof window !== 'undefined') {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(memoryContent));
-      window.dispatchEvent(new CustomEvent('mustafa_life_content_updated', { detail: { key: sectionKey, data: sectionData } }));
+      window.dispatchEvent(new CustomEvent('nutri_life_content_updated', { detail: { key: sectionKey, data: sectionData } }));
       window.dispatchEvent(new StorageEvent('storage', { key: STORAGE_KEY }));
     } catch (err) {
       console.error('Failed to save to localStorage:', err);
@@ -381,7 +381,7 @@ export async function resetWebsiteSection<K extends keyof WebsiteContent>(
     memoryContent = { ...DEFAULT_WEBSITE_CONTENT };
     if (typeof window !== 'undefined') {
       localStorage.removeItem(STORAGE_KEY);
-      window.dispatchEvent(new CustomEvent('mustafa_life_content_updated', { detail: { key: 'all' } }));
+      window.dispatchEvent(new CustomEvent('nutri_life_content_updated', { detail: { key: 'all' } }));
     }
     return { success: true };
   }

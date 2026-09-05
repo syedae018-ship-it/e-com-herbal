@@ -13,7 +13,7 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({ images, productName 
     images.length > 0
       ? images
       : [
-          'https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&q=80',
+          '/images/fallback.svg',
         ];
 
   const [activeIndex, setActiveIndex] = useState(0);

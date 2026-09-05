@@ -50,7 +50,7 @@ export default function AdminCategoriesPage() {
     setName('');
     setSlug('');
     setDescription('');
-    setImageUrl('https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80');
+    setImageUrl('/images/fallback.svg');
     setIsActive(true);
     setIsCreating(true);
   };

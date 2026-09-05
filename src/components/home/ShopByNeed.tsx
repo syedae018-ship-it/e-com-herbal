@@ -33,12 +33,12 @@ export const ShopByNeed: React.FC = () => {
   }
 
   return (
-    <section className="py-16 sm:py-20 bg-cream-100/60 border-b border-sand-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+    <section className="py-12 sm:py-20 bg-cream-100/60 border-b border-sand-200">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 sm:space-y-10">
         {/* Section Heading */}
         <div className="text-center max-w-2xl mx-auto space-y-2">
           {section.badge_text && (
-            <span className="text-xs uppercase font-bold tracking-widest text-sage-600">
+            <span className="text-[11px] sm:text-xs uppercase font-bold tracking-widest text-sage-600">
               {section.badge_text}
             </span>
           )}
@@ -51,7 +51,7 @@ export const ShopByNeed: React.FC = () => {
         </div>
 
         {/* Needs Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-5">
           {section.items.map((item, idx) => {
             const Icon = ICON_MAP[item.icon] || Shield;
             const bgClass = BG_CLASSES[idx % BG_CLASSES.length];
@@ -59,15 +59,15 @@ export const ShopByNeed: React.FC = () => {
               <Link
                 key={item.id || idx}
                 href={`/category/${item.slug}`}
-                className="group bg-white p-6 rounded-2xl border border-sand-200 shadow-sm hover:shadow-card transition-all duration-200 flex flex-col justify-between space-y-4 hover:border-forest-700/30"
+                className="group bg-white p-4 sm:p-6 rounded-2xl border border-sand-200 shadow-sm hover:shadow-card transition-all duration-200 flex flex-col justify-between space-y-3 sm:space-y-4 hover:border-forest-700/30"
               >
-                <div className="space-y-3">
+                <div className="space-y-2.5 sm:space-y-3">
                   <div
-                    className={`w-12 h-12 rounded-xl flex items-center justify-center border ${bgClass}`}
+                    className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center border ${bgClass}`}
                   >
-                    <Icon className="w-6 h-6" />
+                    <Icon className="w-5 h-5 sm:w-6 sm:h-6" />
                   </div>
-                  <h3 className="font-serif text-base font-bold text-forest-950 group-hover:text-forest-700 transition-colors">
+                  <h3 className="font-serif text-sm sm:text-base font-bold text-forest-950 group-hover:text-forest-700 transition-colors">
                     {item.title}
                   </h3>
                   <p className="text-xs text-charcoal-600 leading-relaxed">
@@ -75,7 +75,7 @@ export const ShopByNeed: React.FC = () => {
                   </p>
                 </div>
 
-                <div className="pt-3 border-t border-sand-100 flex items-center justify-between text-xs font-bold text-forest-900 group-hover:text-forest-700">
+                <div className="pt-2 sm:pt-3 border-t border-sand-100 flex items-center justify-between text-[11px] sm:text-xs font-bold text-forest-900 group-hover:text-forest-700">
                   <span>Explore Remedies</span>
                   <ArrowRight className="w-3.5 h-3.5 transform group-hover:translate-x-1 transition-transform" />
                 </div>

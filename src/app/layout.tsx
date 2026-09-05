@@ -23,11 +23,11 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: 'HERBAL E COM LIFE | Naturally Better. Everyday.',
+  title: 'NUTRI LIFE | Naturally Better. Everyday.',
   description:
     'Discover thoughtfully crafted organic and herbal products made for healthier everyday living. 100% natural ingredients, clean formulations, and time-tested Ayurvedic remedies.',
   keywords: [
-    'Herbal E Com Life',
+    'Nutri Life',
     'Organic Personal Care',
     'Ayurvedic Herbs',
     'Natural Skincare',
@@ -51,11 +51,11 @@ export default function RootLayout({
             __html: `
               (function() {
                 try {
-                  var theme = localStorage.getItem('mustafa_life_active_theme');
+                  var theme = localStorage.getItem('nutri_life_active_theme');
                   if (theme) {
                     document.documentElement.setAttribute('data-theme', theme);
                   } else {
-                    var cms = localStorage.getItem('mustafa_life_cms_content_v1');
+                    var cms = localStorage.getItem('nutri_life_cms_content_v1');
                     if (cms) {
                       var parsed = JSON.parse(cms);
                       if (parsed && parsed.settings && parsed.settings.active_theme) {

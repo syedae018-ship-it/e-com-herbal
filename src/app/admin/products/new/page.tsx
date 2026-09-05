@@ -34,7 +34,7 @@ export default function AddProductPage() {
             Add New Product
           </h1>
           <p className="text-xs sm:text-sm text-zinc-500 mt-1">
-            Publish a new botanical formula to the Herbal E Com Life catalog.
+            Publish a new botanical formula to the Nutri Life catalog.
           </p>
         </div>
 

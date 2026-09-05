@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#faf8f5"/>
+      <stop offset="50%" stop-color="#f4ede2"/>
+      <stop offset="100%" stop-color="#eae0d0"/>
+    </linearGradient>
+    <linearGradient id="leafGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2d5a27"/>
+      <stop offset="100%" stop-color="#1b3817"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d4af37"/>
+      <stop offset="100%" stop-color="#aa820a"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="600" height="600" fill="url(#bgGrad)"/>
+  
+  <!-- Subtle organic background curves -->
+  <circle cx="300" cy="300" r="220" fill="#fcfbfa" opacity="0.6"/>
+  <circle cx="300" cy="300" r="180" fill="none" stroke="#d5c7b3" stroke-width="1.5" stroke-dasharray="6 6" opacity="0.8"/>
+  
+  <!-- Central Botanical Emblem -->
+  <g transform="translate(300, 260) scale(1.4)">
+    <!-- Leaves Left -->
+    <path d="M0,0 C-20,-40 -50,-30 -45,0 C-40,30 -10,35 0,40" fill="url(#leafGrad)" opacity="0.85"/>
+    <path d="M0,0 C-10,-20 -25,-15 -22,0 C-20,15 -5,18 0,20" fill="#4a7c43" opacity="0.6"/>
+    
+    <!-- Leaves Right -->
+    <path d="M0,0 C20,-40 50,-30 45,0 C40,30 10,35 0,40" fill="url(#leafGrad)" opacity="0.85"/>
+    <path d="M0,0 C10,-20 25,-15 22,0 C20,15 5,18 0,20" fill="#4a7c43" opacity="0.6"/>
+    
+    <!-- Center Sprout -->
+    <path d="M0,45 C-5,20 -12,5 0,-30 C12,5 5,20 0,45 Z" fill="url(#leafGrad)"/>
+    <path d="M0,45 L0,-25" stroke="#ffffff" stroke-width="1.5" opacity="0.4"/>
+  </g>
+
+  <!-- Brand Typography -->
+  <text x="300" y="375" font-family="Georgia, serif" font-size="22" font-weight="bold" fill="#1b3817" text-anchor="middle" letter-spacing="3">NUTRI LIFE</text>
+  <text x="300" y="402" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="600" fill="#8c7355" text-anchor="middle" letter-spacing="4">PURE BOTANICAL CARE</text>
+  
+  <!-- Subtle bottom accent -->
+  <path d="M250,425 L350,425" stroke="url(#goldGrad)" stroke-width="1.5" stroke-linecap="round"/>
+  <circle cx="300" cy="425" r="3" fill="#aa820a"/>
+</svg>

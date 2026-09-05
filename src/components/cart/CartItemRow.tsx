@@ -20,7 +20,7 @@ export const CartItemRow: React.FC<CartItemRowProps> = ({
 }) => {
   const imageUrl =
     item.product.images?.[0] ||
-    'https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=400&q=80';
+    '/images/fallback.svg';
 
   const isMaxStock = item.quantity >= (item.product.stock ?? 99);
 

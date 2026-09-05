@@ -36,14 +36,14 @@ export const Newsletter: React.FC = () => {
   };
 
   return (
-    <section className="py-16 sm:py-20 bg-forest-900 text-cream-50 relative overflow-hidden">
+    <section className="py-12 sm:py-20 bg-forest-900 text-cream-50 relative overflow-hidden">
       {/* Decorative leaf backdrop pattern */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6 relative z-10">
-        <div className="w-12 h-12 rounded-full bg-forest-800 border border-forest-700 mx-auto flex items-center justify-center text-sage-300">
-          <Mail className="w-6 h-6" />
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-5 sm:space-y-6 relative z-10">
+        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-forest-800 border border-forest-700 mx-auto flex items-center justify-center text-sage-300">
+          <Mail className="w-5 h-5 sm:w-6 sm:h-6" />
         </div>
 
-        <div className="space-y-2">
+        <div className="space-y-1.5 sm:space-y-2">
           <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-white">
             {section.heading}
           </h2>
@@ -52,7 +52,7 @@ export const Newsletter: React.FC = () => {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="max-w-md mx-auto flex flex-col sm:flex-row gap-3">
+        <form onSubmit={handleSubmit} className="max-w-md mx-auto flex flex-col sm:flex-row gap-2.5 sm:gap-3">
           <input
             type="email"
             value={email}
@@ -87,7 +87,7 @@ export const Newsletter: React.FC = () => {
           </div>
         )}
 
-        <p className="text-[11px] text-forest-400">
+        <p className="text-[10px] sm:text-[11px] text-forest-400">
           {section.disclaimer || 'No spam, ever. Unsubscribe at any time with a single click.'}
         </p>
       </div>
